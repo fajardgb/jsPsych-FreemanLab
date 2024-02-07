@@ -11,10 +11,13 @@
   <body></body>
 
   <script>
+    var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
+
     var jsPsych = initJsPsych({
       show_progress_bar: true,
-      on_finish: function (data) {
-        jsPsych.data.displayData("csv", "sub-" + sub_id + "_data.csv"); //  save data as csv
+      on_finish: function () {
+        console.log("End of experiment");
+        jsPsych.data.get(localSave("csv", "sub-" + sub_id + "_data.csv"));
       },
     });
 
@@ -23,7 +26,7 @@
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Welcome to OUR TASK NAME HERE! Press any key to continue.",
+      stimulus: "Welcome to OUR-TASK-NAME-HERE! Press any key to continue.",
     };
     timeline.push(welcome);
 
@@ -49,21 +52,6 @@
     };
     timeline.push(screenerTaskEnglish);
 
-    var questions = {
-      type: jsPsychSurveyText,
-      questions: [
-        { prompt: "Please enter your Prolific ID accurately.", name: "ID" },
-        { prompt: "What is your current state?", name: "state" },
-        { prompt: "What is your age?", name: "age" },
-        {
-          prompt: "Are you fluent in English?",
-          options: ["Yes", "No"],
-          name: "English",
-        },
-      ],
-    };
-    timeline.push(questions);
-
     var attention_check = {
       type: jsPsychSurveyMultiChoice,
       questions: [
@@ -84,11 +72,6 @@
     };
     timeline.push(attention_check);
 
-    var thanks = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Thank you for completing the survey!",
-    };
-    timeline.push(thanks);
     jsPsych.run(timeline);
   </script>
 </html>

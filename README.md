@@ -31,27 +31,86 @@ var jsPsych = initJsPsych({
       },
     });
 ```
-3. Include brief **Instructions, Consent, and Demographics** in all scripts! 
-   1. maybe create own js script and call it? 
+4. Include a brief **Consent** page at the start, **Instructions** page(s) explaining the task before they begin, and a **Demographics** page at the end!
+   1. Check out the [consent template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html), and the [demographics template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html)!
 4. Name each trial with an intuitive name. For data saving later
-   1. E.g: don't call a raiting trial simply 'Task'
-5. Additinoal scripts to preprocess/clean/analyze the data would be great but not necessary at the moment :)... just something to think about!
-6. Once done, push scripts to the github page!
+   1. E.g: don't call a raiting trial simply 'Task1'.
+5. If you are working on a script that requires images/word_vectors, you can use your own images/words lists, and loop over them for the experiments. 
+   1. upload sample images to GitHub?
+6. Additinoal scripts to preprocess/clean/analyze the data would be great but not necessary at the moment :)... just something to think about!
+7. Once done, push scripts to the github page!
 
 # Projects
 Ordered roughly by difficulty
 
 ## Survey: Demographics
+See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.html)!
 
-## Survey: Instructions
+Things that need change: 
+1. Make this script be able to be integrated into **ALL** scripts.
 
 ## Survey: MRS, SPS, NFCS, RES, FT
-Simple surveys, if interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
+Easy surveys - would be a good start. If interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
 
 ## Survey: Consent Page
-See example on Github
+See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html)!
 
-Importantly, we need the script to exit/quit if the user answers the political party **attention_check** question wrong. 
+Things that need change:
+1. Make things less hard-coded, more fluid
+   1. eg: change welcome to add variable for task_name to be defined above!
+2. Make all the questions show up on the same page 
+   1. Not sure if this is possible? Since different types (eg; mult choice, free responses, etc)
+3. Make the script exit/quit if the user answers the political party **attention_check** question wrong
+4. Make the script exit/quit if the user is not fluent in English.
+5. Make this script be able to be integrated into **ALL** scripts. 
+
+## Rating Images: single trait at a time
+
+Implement a script that shows an image, and asks to rate it on a specific trait with 
+1. scale
+2. slider
+
+Customizability:
+1. be able to easily change trait word (thin you are rating image on)
+2. be able to change scale easily (eg: from 1-7)
+
+## Rating Images: two traits at a time
+
+Same as above, but asks particpants to rate an image on 2 traits at a time!
+
+## Rating Images: N traits at a time
+
+Same as above, but with N traits!
+
+## FreeResponse Images/Words: one at a time
+This one is already done, but could add more comments/customizability. 
+
+See the [code](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/GF_antonyms)!
+
+## FreeResponse Rate PairwiseSimilarity
+
+May need this for IAC model project! 
+
+See this [paper](https://www.pnas.org/doi/full/10.1073/pnas.1807222115?doi=10.1073/pnas.1807222115) for a description of the task. 
+
+I implemented this already, see this [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/GF_pairwise_sim). This might already work, but needs to be fleshed out more. 
+
+Needed: 
+1. Need each target trait to be compared with each other trait. 
+
+## Passive Viewing of Images
+Passively view
+
+## Mousetracking
+Implement any mousetracking script!
+
+
+## Semantic Decision Task
+
+Prime participant with an image, then ask them to respond (categorize) a word (eg: as good or bad)
+
+![SDT](imgs/SDT.png)
+
 
 
 
