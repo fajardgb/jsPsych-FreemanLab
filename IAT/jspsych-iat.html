@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IAT Example</title>
+    <script src="jspsych/dist/jspsych.js"></script>
+    <script src="jspsych/dist/plugin-iat-html.js"></script>
+    <script src="jspsych/dist/plugin-iat-image.js"></script>
+    <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/dist/plugin-preload.js"></script>
+    <link href="jspsych/dist/jspsych.css" rel="stylesheet">
+  </head>
+  <body></body>
+  <script>
+
+    var sub_id = Math.random().toString().substr(2, 6);
+    console.log("sub_id: "+sub_id);
+
+    var jsPsych = initJsPsych({
+      show_progress_bar: true,
+      on_finish: function(data) {
+        jsPsych.data.get().localSave('csv', 'sub-'+sub_id+'_iat_data.csv'); // Save data as CSV file
+        // jsPsych.data.displayData();
+      }
+    });
+  
+
+    // manually preload images due to presenting them with timeline variables
+    var images = ['img/white/w1.png', 'img/white/w2.png', 'img/white/w3.png', 'img/white/w4.png', 'img/white/w5.png', 'img/white/w6.png',
+    'img/black/b1.png', 'img/black/b2.png', 'img/black/b3.png', 'img/black/b4.png', 'img/black/b5.png', 'img/black/b6.png'];
+
+    var preload = {
+      type: jsPsychPreload,
+      images: images
+    };
+
+    var welcome_block = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<p>Welcome to the Implicit Association Test (IAT).' +
+      '</p><p>Press any key to begin.</p>',
+      post_trial_gap: 1500
+    };
+
+    var category_block = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<p>You will use the "e" and "i" computer keys ' + 'to categorize items into groups as fast as you can. ' +
+      'These are the four groups and the items that belong to each:<br><br>' +
+      '<strong>Good</strong>:<br>' + 'Enjoy, Smiling, Glorious, Beautiful, Fantastic, ' +
+      'Friend, Cheer, Joyous<br><br>' + '<strong>Bad</strong>:<br>' + 'Awful, ' +
+      'Bothersome, Pain, Nasty, Hurtful, Rotten, Evil, Annoy<br><br>' +
+      '<strong>African Americans</strong>:<br>' + "<img src='img/black/b1.png'></img>  " +
+      "<img src='img/black/b2.png'></img>  " + "<img src='img/black/b3.png'></img>  " +
+      "<img src='img/black/b4.png'></img>  " + "<img src='img/black/b5.png'></img>  " +
+      "<img src='img/black/b6.png'></img><br><br>" + '<strong>European Americans</strong>:<br>' +
+      "<img src='img/white/w1.png'></img>  " + "<img src='img/white/w2.png'></img>  " +
+      "<img src='img/white/w3.png'></img>  " + "<img src='img/white/w4.png'></img>  " +
+      "<img src='img/white/w5.png'></img>  " + "<img src='img/white/w6.png'></img><br><br>" +
+      "There are seven parts. The instructions change for each part. Pay attention!<br><br>" +
+      "Press any key to continue.</p>",
+      post_trial_gap: 1500
+    };
+
+    // -------------------------- TRIAL 1 --------------------------
+
+    // randomize which key for which category
+    var rand1 = Math.floor(Math.random() * 2) + 1;
+    console.log('trial 1 rand:'+ rand1);
+    var key_e1, key_i1;
+    if (rand1 ==1) {
+      key_e1 = 'European Americans';
+      key_i1 = 'African Americans';
+    } else {
+      key_e1 = 'African Americans';
+      key_i1 = 'European Americans';
+    }
+
+    // make sure this reflects timeline variables
+    var timeline_variables1;
+    if (key_e1 =='European Americans') {
+        timeline_variables1 = [
+          {stimulus: "img/white/w1.png", stim_key_association: "left"},
+          {stimulus: "img/white/w2.png", stim_key_association: "left"},
+          {stimulus: "img/white/w3.png", stim_key_association: "left"},
+          {stimulus: "img/white/w4.png", stim_key_association: "left"},
+          {stimulus: "img/white/w5.png", stim_key_association: "left"},
+          {stimulus: "img/white/w6.png", stim_key_association: "left"},
+          {stimulus: "img/black/b1.png", stim_key_association: "right"},
+          {stimulus: "img/black/b2.png", stim_key_association: "right"},
+          {stimulus: "img/black/b3.png", stim_key_association: "right"},
+          {stimulus: "img/black/b4.png", stim_key_association: "right"},
+          {stimulus: "img/black/b5.png", stim_key_association: "right"},
+          {stimulus: "img/black/b6.png", stim_key_association: "right"}];
+        } 
+    else {
+        timeline_variables1 = [
+          {stimulus: "img/black/b1.png", stim_key_association: "left"},
+          {stimulus: "img/black/b2.png", stim_key_association: "left"},
+          {stimulus: "img/black/b3.png", stim_key_association: "left"},
+          {stimulus: "img/black/b4.png", stim_key_association: "left"},
+          {stimulus: "img/black/b5.png", stim_key_association: "left"},
+          {stimulus: "img/black/b6.png", stim_key_association: "left"},
+          {stimulus: "img/white/w1.png", stim_key_association: "right"},
+          {stimulus: "img/white/w2.png", stim_key_association: "right"},
+          {stimulus: "img/white/w3.png", stim_key_association: "right"},
+          {stimulus: "img/white/w4.png", stim_key_association: "right"},
+          {stimulus: "img/white/w5.png", stim_key_association: "right"},
+          {stimulus: "img/white/w6.png", stim_key_association: "right"}]
+      }
+
+
+    var instructions_block = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'><p>Press e for:<br><strong>"+key_e1+"</strong></p></div>" +
+      "<div style='position: absolute; top: 18%; right: 20%'><p>Press i for:<br><strong>"+key_i1+"</strong></p></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Put a left finger on the <strong>e</strong> key for items that belong to the "+key_e1+" People category. Put a right finger on the " +
+      "<strong>i</strong> key for items that belong to the "+key_i1+" People " +
+      "category. Items will appear one at a time.<br><br>" + "If you " +
+      "make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press the any key when you are ready to start.</div>",
+    };
+
+    var trial_block = {
+      timeline: [
+        {
+          type: jsPsychIatImage,
+          stimulus: jsPsych.timelineVariable('stimulus'),
+          stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+          html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+          bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+          force_correct_key_press: true,
+          display_feedback: true,
+          trial_duration: 3000, //Only if display_feedback is false
+          left_category_key: 'e',
+          right_category_key: 'i',
+          left_category_label: [key_e1],
+          right_category_label: [key_i1],
+          response_ends_trial: true,
+          data: { iat_type: 'practice', rand: rand1 } //Add this data to the data collected by the plugin
+        }
+      ],
+
+      timeline_variables: timeline_variables1,
+      randomize_order: true,
+      repetitions: 2
+    };
+
+    // -------------------------- TRIAL 2 --------------------------
+
+    var rand2 = Math.floor(Math.random() * 2) + 1;
+    console.log('trial 2 rand:'+ rand2);
+    var key_e2, key_i2;
+    if (rand2 ==1) {
+      key_e2 = 'GOOD';
+      key_i2 = 'BAD';
+    } else {
+      key_e2 = 'BAD';
+      key_i2 = 'GOOD';
+    }
+
+    var timeline_variables2;
+    if (key_e2 =='GOOD') {
+        timeline_variables2 = [
+          {stimulus: "Enjoy", stim_key_association: "left"},
+          {stimulus: "Smiling", stim_key_association: "left"},
+          {stimulus: "Glorious", stim_key_association: "left"},
+          {stimulus: "Beautiful", stim_key_association: "left"},
+          {stimulus: "Fantastic", stim_key_association: "left"},
+          {stimulus: "Friend", stim_key_association: "left"},
+          {stimulus: "Cheer", stim_key_association: "left"},
+          {stimulus: "Joyous", stim_key_association: "left"},
+          {stimulus: "Awful", stim_key_association: "right"},
+          {stimulus: "Bothersome", stim_key_association: "right"},
+          {stimulus: "Pain", stim_key_association: "right"},
+          {stimulus: "Nasty", stim_key_association: "right"},
+          {stimulus: "Hurtful", stim_key_association: "right"},
+          {stimulus: "Rotten", stim_key_association: "right"},
+          {stimulus: "Evil", stim_key_association: "right"},
+          {stimulus: "Annoy", stim_key_association: "right"}];
+        
+      } 
+    else {
+        timeline_variables2 = [
+          {stimulus: "Enjoy", stim_key_association: "right"},
+          {stimulus: "Smiling", stim_key_association: "right"},
+          {stimulus: "Glorious", stim_key_association: "right"},
+          {stimulus: "Beautiful", stim_key_association: "right"},
+          {stimulus: "Fantastic", stim_key_association: "right"},
+          {stimulus: "Friend", stim_key_association: "right"},
+          {stimulus: "Cheer", stim_key_association: "right"},
+          {stimulus: "Joyous", stim_key_association: "right"},
+          {stimulus: "Awful", stim_key_association: "left"},
+          {stimulus: "Bothersome", stim_key_association: "left"},
+          {stimulus: "Pain", stim_key_association: "left"},
+          {stimulus: "Nasty", stim_key_association: "left"},
+          {stimulus: "Hurtful", stim_key_association: "left"},
+          {stimulus: "Rotten", stim_key_association: "left"},
+          {stimulus: "Evil", stim_key_association: "left"},
+          {stimulus: "Annoy", stim_key_association: "left"}];
+      }
+
+    var instructions_block2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'>Press E for:<br><strong>"+key_e2+"</strong></div>" +
+      "<div style='position: absolute; top: 18%; right: 20%'>Press I for:<br><strong>"+key_i2+"</strong></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Put a left finger on the <strong>e</strong> key for items that " +
+      "belong to the "+key_e2+" category. Put a right finger on the " +
+      "<strong>i</strong> key for items that belong to the "+key_i2+
+      " category. Items will appear one at a time.<br><br>" + "If you " +
+      "make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press the any key when you are ready to start.</div>",
+    };
+
+    var trial_block2 = {
+      timeline: [
+        {
+          type: jsPsychIatHtml,
+          stimulus: jsPsych.timelineVariable('stimulus'),
+          stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+          html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+          bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+          force_correct_key_press: true,
+          display_feedback: true,
+          trial_duration: 3000, //Only if display_feedback is false
+          left_category_key: 'e',
+          right_category_key: 'i',
+          left_category_label: [key_e2],
+          right_category_label: [key_i2],
+          response_ends_trial: true,
+          data: { iat_type: 'practice' }
+        }
+      ],
+      timeline_variables: timeline_variables2,
+      randomize_order: true,
+      repetitions: 2
+    };
+
+    // -------------------------- TRIAL 3 & 4-------------------------
+
+    key_e34 = key_e1 +" or "+ key_e2;
+    key_i34 = key_i1 +" or "+ key_i2;
+
+    // console.log('key_e34:'+ key_e34);
+    // console.log('key_i34:'+ key_i34);
+
+    var timeline_variables34;
+
+    // if WG is for key E
+    if (key_e34 == 'European Americans or GOOD') {
+      timeline_variables34 = [
+          {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "left"},
+          {stimulus: "Enjoy", stim_key_association: "left"},
+          {stimulus: "Smiling", stim_key_association: "left"},
+          {stimulus: "Glorious", stim_key_association: "left"},
+          {stimulus: "Beautiful", stim_key_association: "left"},
+          {stimulus: "Fantastic", stim_key_association: "left"},
+          {stimulus: "Friend", stim_key_association: "left"},
+          {stimulus: "Cheer", stim_key_association: "left"},
+          {stimulus: "Joyous", stim_key_association: "left"},
+
+          {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "right"},
+          {stimulus: "Awful", stim_key_association: "right"},
+          {stimulus: "Bothersome", stim_key_association: "right"},
+          {stimulus: "Pain", stim_key_association: "right"},
+          {stimulus: "Nasty", stim_key_association: "right"},
+          {stimulus: "Hurtful", stim_key_association: "right"},
+          {stimulus: "Rotten", stim_key_association: "right"},
+          {stimulus: "Evil", stim_key_association: "right"},
+          {stimulus: "Annoy", stim_key_association: "right"}
+        ];
+    }
+
+    // if WG is for key I
+    if (key_i34 == 'European Americans or GOOD') {
+      timeline_variables34 = [
+          {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "right"},
+          {stimulus: "Enjoy", stim_key_association: "right"},
+          {stimulus: "Smiling", stim_key_association: "right"},
+          {stimulus: "Glorious", stim_key_association: "right"},
+          {stimulus: "Beautiful", stim_key_association: "right"},
+          {stimulus: "Fantastic", stim_key_association: "right"},
+          {stimulus: "Friend", stim_key_association: "right"},
+          {stimulus: "Cheer", stim_key_association: "right"},
+          {stimulus: "Joyous", stim_key_association: "right"},
+
+          {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "left"},
+          {stimulus: "Awful", stim_key_association: "left"},
+          {stimulus: "Bothersome", stim_key_association: "left"},
+          {stimulus: "Pain", stim_key_association: "left"},
+          {stimulus: "Nasty", stim_key_association: "left"},
+          {stimulus: "Hurtful", stim_key_association: "left"},
+          {stimulus: "Rotten", stim_key_association: "left"},
+          {stimulus: "Evil", stim_key_association: "left"},
+          {stimulus: "Annoy", stim_key_association: "left"}
+        ];
+    }
+
+    // if BG is for key E
+    if (key_e34 == 'African Americans or GOOD') {
+      timeline_variables34 = [
+          {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "left"},
+          {stimulus: "Enjoy", stim_key_association: "left"},
+          {stimulus: "Smiling", stim_key_association: "left"},
+          {stimulus: "Glorious", stim_key_association: "left"},
+          {stimulus: "Beautiful", stim_key_association: "left"},
+          {stimulus: "Fantastic", stim_key_association: "left"},
+          {stimulus: "Friend", stim_key_association: "left"},
+          {stimulus: "Cheer", stim_key_association: "left"},
+          {stimulus: "Joyous", stim_key_association: "left"},
+
+          {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "right"},
+          {stimulus: "Awful", stim_key_association: "right"},
+          {stimulus: "Bothersome", stim_key_association: "right"},
+          {stimulus: "Pain", stim_key_association: "right"},
+          {stimulus: "Nasty", stim_key_association: "right"},
+          {stimulus: "Hurtful", stim_key_association: "right"},
+          {stimulus: "Rotten", stim_key_association: "right"},
+          {stimulus: "Evil", stim_key_association: "right"},
+          {stimulus: "Annoy", stim_key_association: "right"}
+        ];
+    }
+
+    // if BG for key I
+    if (key_i34 == 'African Americans or GOOD') {
+      timeline_variables34 = [
+          {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "right"},
+          {stimulus: "Enjoy", stim_key_association: "right"},
+          {stimulus: "Smiling", stim_key_association: "right"},
+          {stimulus: "Glorious", stim_key_association: "right"},
+          {stimulus: "Beautiful", stim_key_association: "right"},
+          {stimulus: "Fantastic", stim_key_association: "right"},
+          {stimulus: "Friend", stim_key_association: "right"},
+          {stimulus: "Cheer", stim_key_association: "right"},
+          {stimulus: "Joyous", stim_key_association: "right"},
+
+          {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "left"},
+          {stimulus: "Awful", stim_key_association: "left"},
+          {stimulus: "Bothersome", stim_key_association: "left"},
+          {stimulus: "Pain", stim_key_association: "left"},
+          {stimulus: "Nasty", stim_key_association: "left"},
+          {stimulus: "Hurtful", stim_key_association: "left"},
+          {stimulus: "Rotten", stim_key_association: "left"},
+          {stimulus: "Evil", stim_key_association: "left"},
+          {stimulus: "Annoy", stim_key_association: "left"}
+        ];
+    }
+
+
+    var instructions_block3 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'>Press e for:<br> " +
+      "<strong>"+key_e34.split(" or ")[0]+"</strong><br>" + "or<br>" + "<strong>"+key_e34.split(" or ")[1]+"</strong></div>" + "<div style='position: absolute; top: 18%; right: 20%'>" +
+      "Press i for:<br>" + "<strong>"+key_i34.split(" or ")[0]+"</strong><br>" + "or<br>" + "<strong>"+key_i34.split(" or ")[1]+"</strong></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Use <strong>e</strong> for "+key_e34+ 
+      ". Use <strong>i</strong> for "+key_i34+" <br>" +
+      "Each item belongs to only one category.<br><br>" + "If you " +
+      "make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press any key when you are ready to start.</div>"
+    };
+
+    var trial_block3 = {
+      timeline: [
+        {
+          // type: jsPsych.timelineVariable('type'),
+          type: jsPsychIatHtml,
+          stimulus: jsPsych.timelineVariable('stimulus'),
+          stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+          html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+          bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+          force_correct_key_press: true,
+          display_feedback: true,
+          trial_duration: 3000, //Only if display_feedback is false
+          left_category_key: 'e',
+          right_category_key: 'i',
+          left_category_label: [key_e34.split(" or ")[0], key_e34.split(" or ")[1]],
+          right_category_label: [key_i34.split(" or ")[0], key_i34.split(" or ")[1]],
+          response_ends_trial: true,
+          data: { iat_type: 'practice', key_e3: key_e34, key_i3: key_i34 }
+        }
+      ],
+      
+      timeline_variables: timeline_variables34,
+      randomize_order: true,
+      repetitions: 1
+    };
+
+    // -------------------------- TRIAL 4 (same as 3) --------------------------
+
+    var instructions_block4 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'>Press e for:<br> " +
+      "<strong>"+key_e34.split(" or ")[0]+"</strong><br>" + "or<br>" + "<strong>"+key_e34.split(" or ")[1]+"</strong></div>" + "<div style='position: absolute; top: 18%; right: 20%'>" +
+      "Press i for:<br>" + "<strong>"+key_i34.split(" or ")[0]+"</strong><br>" + "or<br>" + "<strong>"+key_i34.split(" or ")[1]+"</strong></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Use <strong>e</strong> for "+key_e34+ 
+      ". Use <strong>i</strong> for "+key_i34+" <br>" +
+      "Each item belongs to only one category.<br><br>" + "If you " +
+      "make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press any key when you are ready to start.</div>",
+    };
+
+    var trial_block4 = {
+      timeline: [
+        {
+          // type: jsPsych.timelineVariable('type'),
+          type: jsPsychIatHtml,
+          stimulus: jsPsych.timelineVariable('stimulus'),
+          stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+          html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+          bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+          force_correct_key_press: true,
+          display_feedback: true,
+          trial_duration: 3000, //Only if display_feedback is false
+          left_category_key: 'e',
+          right_category_key: 'i',
+          left_category_label: [key_e34.split(" or ")[0], key_e34.split(" or ")[1]],
+          right_category_label: [key_i34.split(" or ")[0], key_i34.split(" or ")[1]],
+          response_ends_trial: true,
+          data: { iat_type: key_e34 + key_i34, key_e34: key_e34, key_i34: key_i34 }
+        }
+      ],
+
+      timeline_variables: timeline_variables34,
+      randomize_order: true,
+      repetitions: 2
+      };
+
+      // -------------------------- TRIAL 5 --------------------------
+
+    var key_e5, key_i5;
+    // if this, then use the other!
+    if (key_e34 == 'European Americans or GOOD') {
+      key_e5 = 'African American';
+      key_i5 = 'European American';
+    }
+
+    if (key_e34 == 'European Americans or BAD') {
+      key_e5 = 'African American';
+      key_i5 = 'European American';
+    }
+
+    if (key_e34 == 'African Americans or GOOD') {
+      key_e5 = 'European American';
+      key_i5 = 'African American';
+    }
+
+    if (key_e34 == 'African Americans or BAD') {
+      key_e5 = 'European American';
+      key_i5 = 'African American';
+    }
+
+    // make timeline variables
+    var timeline_variables5;
+    if (key_e5 == 'European American') {
+      timeline_variables5 = [
+        {stimulus: "img/white/w1.png", stim_key_association: "left"},
+        {stimulus: "img/white/w2.png", stim_key_association: "left"},
+        {stimulus: "img/white/w3.png", stim_key_association: "left"},
+        {stimulus: "img/white/w4.png", stim_key_association: "left"},
+        {stimulus: "img/white/w5.png", stim_key_association: "left"},
+        {stimulus: "img/white/w6.png", stim_key_association: "left"},
+
+        {stimulus: "img/black/b1.png", stim_key_association: "right"},
+        {stimulus: "img/black/b2.png", stim_key_association: "right"},
+        {stimulus: "img/black/b3.png", stim_key_association: "right"},
+        {stimulus: "img/black/b4.png", stim_key_association: "right"},
+        {stimulus: "img/black/b5.png", stim_key_association: "right"},
+        {stimulus: "img/black/b6.png", stim_key_association: "right"}
+      ];
+    }
+    else {
+      timeline_variables5 = [
+        {stimulus: "img/white/w1.png", stim_key_association: "right"},
+        {stimulus: "img/white/w2.png", stim_key_association: "right"},
+        {stimulus: "img/white/w3.png", stim_key_association: "right"},
+        {stimulus: "img/white/w4.png", stim_key_association: "right"},
+        {stimulus: "img/white/w5.png", stim_key_association: "right"},
+        {stimulus: "img/white/w6.png", stim_key_association: "right"},
+
+        {stimulus: "img/black/b1.png", stim_key_association: "left"},
+        {stimulus: "img/black/b2.png", stim_key_association: "left"},
+        {stimulus: "img/black/b3.png", stim_key_association: "left"},
+        {stimulus: "img/black/b4.png", stim_key_association: "left"},
+        {stimulus: "img/black/b5.png", stim_key_association: "left"},
+        {stimulus: "img/black/b6.png", stim_key_association: "left"}
+      ];
+    }
+
+
+    var instructions_block5 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'>Press e for:<br>" + "<strong>"+key_e5+"</strong></div>" +
+      "<div style='position: absolute; top: 18%; right: 20%'>Press i for:<br>" + "<strong>"+key_i5+"</strong></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Watch out, the labels have changed positions!<br>" +
+      "Use <strong>e</strong> for "+key_e5+" People<br>" + "Use <strong>i</strong> for "+key_i5+" People<br><br>" +
+      "If you make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press the any key when you are ready to start.</div>"
+    };
+
+    var trial_block5 = { 
+      timeline: [
+        {
+          type: jsPsychIatImage,
+          //is_html: false,
+          stimulus: jsPsych.timelineVariable('stimulus'),
+          stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+          html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+          bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+          force_correct_key_press: true,
+          display_feedback: true,
+          trial_duration: 3000, //Only if display_feedback is false
+          left_category_key: 'e',
+          right_category_key: 'i',
+          left_category_label: [key_e5],
+          right_category_label: [key_i5],
+          response_ends_trial: true,
+          data: { iat_type: 'practice' }
+        }
+      ],
+      timeline_variables: timeline_variables5,
+      randomize_order: true,
+      repetitions: 2
+    };
+
+    // -------------------------- TRIAL 6 --------------------------
+    var key_e67, key_i67;
+
+    if (key_e34 == 'European Americans or GOOD') {
+      key_e67 = 'African Americans or GOOD';
+      key_i67 = 'European Americans or BAD';
+    }
+
+    if (key_e34 == 'European Americans or BAD') {
+      key_e67 = 'African Americans or GOOD';
+      key_i67 = 'European Americans or BAD';
+    }
+
+    if (key_e34 == 'African Americans or GOOD') {
+      key_e67 = 'European Americans or GOOD';
+      key_i67 = 'African Americans or BAD';
+    }
+
+    if (key_e34 == 'African Americans or BAD') {
+      key_e67 = 'European Americans or GOOD';
+      key_i67 = 'African Americans or BAD';
+    }
+
+    // console.log('key_e67: '+key_e67);
+    // console.log('key_i67: '+key_i67);
+
+    var timeline_variables67;
+
+    // if WG is for key E
+    if (key_e67 == 'European Americans or GOOD') {
+      timeline_variables67 = [
+        {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "left"},
+        {stimulus: "Enjoy", stim_key_association: "left"},
+        {stimulus: "Smiling", stim_key_association: "left"},
+        {stimulus: "Glorious", stim_key_association: "left"},
+        {stimulus: "Beautiful", stim_key_association: "left"},
+        {stimulus: "Fantastic", stim_key_association: "left"},
+        {stimulus: "Friend", stim_key_association: "left"},
+        {stimulus: "Cheer", stim_key_association: "left"},
+        {stimulus: "Joyous", stim_key_association: "left"},
+
+        {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "right"},
+        {stimulus: "Awful", stim_key_association: "right"},
+        {stimulus: "Bothersome", stim_key_association: "right"},
+        {stimulus: "Pain", stim_key_association: "right"},
+        {stimulus: "Nasty", stim_key_association: "right"},
+        {stimulus: "Hurtful", stim_key_association: "right"},
+        {stimulus: "Rotten", stim_key_association: "right"},
+        {stimulus: "Evil", stim_key_association: "right"},
+        {stimulus: "Annoy", stim_key_association: "right"}
+      ];
+  }
+
+  // if WG is for key I
+    if (key_i67 == 'European Americans or GOOD') {
+      timeline_variables67 = [
+        {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "right"},
+        {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "right"},
+        {stimulus: "Enjoy", stim_key_association: "right"},
+        {stimulus: "Smiling", stim_key_association: "right"},
+        {stimulus: "Glorious", stim_key_association: "right"},
+        {stimulus: "Beautiful", stim_key_association: "right"},
+        {stimulus: "Fantastic", stim_key_association: "right"},
+        {stimulus: "Friend", stim_key_association: "right"},
+        {stimulus: "Cheer", stim_key_association: "right"},
+        {stimulus: "Joyous", stim_key_association: "right"},
+
+        {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "left"},
+        {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "left"},
+        {stimulus: "Awful", stim_key_association: "left"},
+        {stimulus: "Bothersome", stim_key_association: "left"},
+        {stimulus: "Pain", stim_key_association: "left"},
+        {stimulus: "Nasty", stim_key_association: "left"},
+        {stimulus: "Hurtful", stim_key_association: "left"},
+        {stimulus: "Rotten", stim_key_association: "left"},
+        {stimulus: "Evil", stim_key_association: "left"},
+        {stimulus: "Annoy", stim_key_association: "left"}
+        ];
+    }
+
+    // if BG is for key E
+    if (key_e67 == 'African Americans or GOOD') {
+      timeline_variables67 = [
+          {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "left"},
+          {stimulus: "Enjoy", stim_key_association: "left"},
+          {stimulus: "Smiling", stim_key_association: "left"},
+          {stimulus: "Glorious", stim_key_association: "left"},
+          {stimulus: "Beautiful", stim_key_association: "left"},
+          {stimulus: "Fantastic", stim_key_association: "left"},
+          {stimulus: "Friend", stim_key_association: "left"},
+          {stimulus: "Cheer", stim_key_association: "left"},
+          {stimulus: "Joyous", stim_key_association: "left"},
+
+          {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "right"},
+          {stimulus: "Awful", stim_key_association: "right"},
+          {stimulus: "Bothersome", stim_key_association: "right"},
+          {stimulus: "Pain", stim_key_association: "right"},
+          {stimulus: "Nasty", stim_key_association: "right"},
+          {stimulus: "Hurtful", stim_key_association: "right"},
+          {stimulus: "Rotten", stim_key_association: "right"},
+          {stimulus: "Evil", stim_key_association: "right"},
+          {stimulus: "Annoy", stim_key_association: "right"}];
+    }
+
+    // if BG for key I
+    if (key_i67 == 'African Americans or GOOD') {
+      timeline_variables67 = [
+          {stimulus: "<img src=img/black/b1.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b2.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b3.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b4.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b5.png></img>", stim_key_association: "right"},
+          {stimulus: "<img src=img/black/b6.png></img>", stim_key_association: "right"},
+          {stimulus: "Enjoy", stim_key_association: "right"},
+          {stimulus: "Smiling", stim_key_association: "right"},
+          {stimulus: "Glorious", stim_key_association: "right"},
+          {stimulus: "Beautiful", stim_key_association: "right"},
+          {stimulus: "Fantastic", stim_key_association: "right"},
+          {stimulus: "Friend", stim_key_association: "right"},
+          {stimulus: "Cheer", stim_key_association: "right"},
+          {stimulus: "Joyous", stim_key_association: "right"},
+
+          {stimulus: "<img src=img/white/w1.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w2.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w3.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w4.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w5.png></img>", stim_key_association: "left"},
+          {stimulus: "<img src=img/white/w6.png></img>", stim_key_association: "left"},
+          {stimulus: "Awful", stim_key_association: "left"},
+          {stimulus: "Bothersome", stim_key_association: "left"},
+          {stimulus: "Pain", stim_key_association: "left"},
+          {stimulus: "Nasty", stim_key_association: "left"},
+          {stimulus: "Hurtful", stim_key_association: "left"},
+          {stimulus: "Rotten", stim_key_association: "left"},
+          {stimulus: "Evil", stim_key_association: "left"},
+          {stimulus: "Annoy", stim_key_association: "left"}];
+    }
+
+
+    var instructions_block6 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'>Press e for:<br> <strong>"+key_e67.split(" or ")[0]+"</strong><br>" + "or<br>" +
+      "<strong>"+key_e67.split(" or ")[1]+"</strong></div>" + "<div style='position: absolute; top: 18%; right: 20%'>Press i for:<br>" + "<strong>"+key_i67.split(" or ")[0]+"</strong><br>" + "or<br>" +
+      "<strong>"+key_i67.split(" or ")[1]+"</strong></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Use <strong>e</strong> for "+key_e67+"<br>" +
+      "Use <strong>i</strong> for "+key_i67+" <br><br>" +
+      "If you make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press the any key when you are ready to start.</div>"
+    };
+
+    var trial_block6 = {
+      timeline: [
+      {
+        // type: jsPsych.timelineVariable('type'),
+        type: jsPsychIatHtml,
+        stimulus: jsPsych.timelineVariable('stimulus'),
+        stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+        html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+        bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+        force_correct_key_press: true,
+        display_feedback: true,
+        trial_duration: 3000, //Only if display_feedback is false
+        left_category_key: 'e',
+        right_category_key: 'i',
+        left_category_label: [key_e67.split(" or ")[0], key_e67.split(" or ")[1]],
+        right_category_label: [key_i67.split(" or ")[0], key_i67.split(" or ")[1]],
+        response_ends_trial: true,
+        data: { iat_type: 'practice', key_e67: key_e67, key_i67: key_i67 }
+      }
+      ],
+        timeline_variables: timeline_variables67,
+        randomize_order: true,
+        repetitions: 1
+      };
+
+      // -------------------------- TRIAL 7 --------------------------
+
+    var instructions_block7 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<div style='position: absolute; top: 18%; left: 20%'>Press e for:<br> <strong>"+key_e67.split(" or ")[0]+"</strong><br>" + "or<br>" +
+      "<strong>"+key_e67.split(" or ")[1]+"</strong></div>" + "<div style='position: absolute; top: 18%; right: 20%'>Press i for:<br>" + "<strong>"+key_i67.split(" or ")[0]+"</strong><br>" + "or<br>" +
+      "<strong>"+key_i67.split(" or ")[1]+"</strong></div>" +
+      "<div style='position: relative; top: 42%; margin-left: auto; margin-right: auto'>Use <strong>e</strong> for "+key_e67+"<br>" +
+      "Use <strong>i</strong> for "+key_i67+" <br><br>" +
+      "If you make a mistake, a red X will appear. Press the keys listed below " +
+      "to continue. Go as fast as you can while being accurate.<br><br> " +
+      "Press the any key when you are ready to start.</div>"
+    };
+
+    var trial_block7 = {
+      timeline: [
+      {
+        // type: jsPsych.timelineVariable('type'),
+        type: jsPsychIatHtml,
+        is_html: jsPsych.timelineVariable('is_html'),
+        stimulus: jsPsych.timelineVariable('stimulus'),
+        stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+        html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+        bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+        force_correct_key_press: true,
+        display_feedback: true,
+        trial_duration: 3000, //Only if display_feedback is false
+        left_category_key: 'e',
+        right_category_key: 'i',
+        left_category_label: [key_e67.split(" or ")[0], key_e67.split(" or ")[1]],
+        right_category_label: [key_i67.split(" or ")[0], key_i67.split(" or ")[1]],
+        response_ends_trial: true,
+        data: { iat_type: key_e67 + key_i67, key_e67: key_e67, key_i67: key_i67 }
+      }
+      ],
+      timeline_variables: timeline_variables67,
+      randomize_order: true,
+      repetitions: 2
+    };
+
+    var debrief_block = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<p>You're all done! Thank you for participating. Please let the researcher know - do not close any tabs! Remind the researcher if you have not yet received payment.</p>",
+    };
+
+    var timeline = [];
+    timeline.push(preload);
+    timeline.push(welcome_block);
+    timeline.push(category_block);
+    timeline.push(instructions_block);
+    timeline.push(trial_block);
+    timeline.push(instructions_block2);
+    timeline.push(trial_block2);
+    timeline.push(instructions_block3);
+    timeline.push(trial_block3);
+    timeline.push(instructions_block4);
+    timeline.push(trial_block4);
+    timeline.push(instructions_block5);
+    timeline.push(trial_block5);
+    timeline.push(instructions_block6);
+    timeline.push(trial_block6);
+    timeline.push(instructions_block7);
+    timeline.push(trial_block7);
+    timeline.push(debrief_block);
+
+    jsPsych.run(timeline);
+
+  </script>
+</html>
