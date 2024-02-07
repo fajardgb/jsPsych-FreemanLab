@@ -9,7 +9,7 @@ When writing these scripts, please make sure they are **well-commented and easil
 - **Example 2**: when rating images, make it loop through a list/array of images/image_names - don’t make it so you have to call an image every time. 
 - **Example 3**: When you say “this experiment takes {XXX} minutes to complete” in the instructions page, make sure that XXX is a variable at the top of your script
 
-This is so folks who join the lab and are not as technologically inclined as you have an easier time setting up their own scripts 😀. 
+This is so folks who join the lab and are not as technologically inclined as you have an easier time setting up their own experiments 😀. 
 
 As with any good psychology experiment, randomization is a must. Make sure there is an easy way to randomize your experiments, whether that be through jsPsych or creating a function that randomizes an array of image names. 
 
@@ -37,7 +37,7 @@ var jsPsych = initJsPsych({
    1. E.g: don't call a raiting trial simply 'Task1'.
 5. If you are working on a script that requires images/word_vectors, you can use your own images/words lists, and loop over them for the experiments. 
    1. upload sample images to GitHub?
-6. Additinoal scripts to preprocess/clean/analyze the data would be great but not necessary at the moment :)... just something to think about!
+6. Additional scripts to preprocess/clean/analyze the data would be great but not necessary at the moment :)... just something to think about!
 7. Once done, push scripts to the github page!
 
 # Projects
@@ -47,10 +47,12 @@ Ordered roughly by difficulty
 See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.html)!
 
 Things that need change: 
-1. Make this script be able to be integrated into **ALL** scripts.
+1. Make this script be able to be integrated into the end of **ALL** scripts.
 
 ## Survey: MRS, SPS, NFCS, RES, FT
 Easy surveys - would be a good start. If interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
+
+![MRS](imgs/MRS.png)
 
 ## Survey: Consent Page
 See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html)!
@@ -61,18 +63,20 @@ Things that need change:
 2. Make all the questions show up on the same page 
    1. Not sure if this is possible? Since different types (eg; mult choice, free responses, etc)
 3. Make the script exit/quit if the user answers the political party **attention_check** question wrong
-4. Make the script exit/quit if the user is not fluent in English.
-5. Make this script be able to be integrated into **ALL** scripts. 
+4. Make the script exit/quit if the user is **not fluent in English.**
+5. Make this script be able to be integrated at the end of **ALL** scripts. 
 
 ## Rating Images: single trait at a time
 
 Implement a script that shows an image, and asks to rate it on a specific trait with 
-1. scale
+1. scale (button response)
 2. slider
 
 Customizability:
-1. be able to easily change trait word (thin you are rating image on)
-2. be able to change scale easily (eg: from 1-7)
+1. be able to easily change traits/words (dimensions you are rating images on)
+2. loop over an array of image names for a single trait
+3. loop over an array of traits/words for a single image
+4. be able to change scale easily (eg: from 1-7 to 1-9)
 
 ## Rating Images: two traits at a time
 
