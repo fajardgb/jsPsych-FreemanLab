@@ -108,7 +108,7 @@ Needed:
 Implement any mousetracking script!
 
 ## Implicit Association Test (IAT)
-I made this one for a post-scan task, but it is embarassingly hard coded. See the example. 
+I made this one for a post-scan task, but it is embarassingly hard coded. See the [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/IAT). 
 
 Needed: 
 1. make things not hard-coded and more customizable
