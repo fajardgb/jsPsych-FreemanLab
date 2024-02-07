@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Free response</title>
+    <script src="../jspsych/jspsych.js"></script>
+    <script src="../jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="../jspsych/plugin-survey-text.js"></script>
+    <script src="../jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="../jspsych/plugin-instructions.js"></script>
+    <script src="../jspsych/plugin-preload.js"></script>
+    <script src="../jspsych/plugin-html-slider-response.js"></script>
+    <link href="../jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+    //shuffling array
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // Generate a random index from 0 to i
+
+        // Swap array[i] and array[j]
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // for saving data online... don't worry about this!
+    // function saveData(data) {
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open("POST", "save.php");
+    //   xhr.setRequestHeader("Content-Type", "application/json");
+    //   xhr.send(JSON.stringify({ filedata: data }));
+    // }
+
+    var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
+
+    //start jsPsych experiment
+    var jsPsych = initJsPsych({
+      show_progress_bar: true,
+      on_finish: function () {
+        console.log("End of experiment");
+        jsPsych.data.get(localSave("csv", "sub-" + sub_id + "_data.csv")); // saves data locally
+
+        // for saving data online... don't worry about this!
+        // var data = jsPsych.data.get().csv(); //get and save data
+        // saveData(data);
+      },
+    });
+
+    //create timeline
+    var timeline = [];
+
+    //trait array
+    var traitArray = [
+      "Trustworthy",
+      "Condescending",
+      "Articulate",
+      "Affectionate",
+      "Dignified",
+      "Combative",
+      "Self-critical",
+      "Persistent",
+      "Prejudiced",
+      "Sensitive",
+      "Clever",
+      "Prudish",
+      "Unobservant",
+      "Healthy",
+      "Ambitious",
+      "Optimistic",
+      "Grumpy",
+      "Passive",
+      "Sociable",
+      "Mature",
+      "Skeptical",
+      "Religious",
+      "Easygoing",
+      "Courageous",
+      "Happy",
+      "Intellectual",
+      "Charismatic",
+      "Consistent",
+      "Patient",
+      "Independent",
+      "Submissive",
+      "Beautiful",
+      "Sincere",
+      "Weird",
+      "Competent",
+      "Ethical",
+      "Enthusiastic",
+      "Responsible",
+      "Punctual",
+      "Flexible",
+      "Mean",
+      "Youthful",
+      "Abusive",
+      "Bossy",
+      "Rebellious",
+      "Careful",
+      "Ignorant",
+      "Helpful",
+      "Cruel",
+      "Critical",
+      "Aggressive",
+      "Self-pitying",
+      "Conscientious",
+      "Thoughtful",
+      "Empathetic",
+      "Confident",
+      "Compulsive",
+      "Humble",
+      "Practical",
+      "Defensive",
+      "Reasonable",
+      "Anxious",
+      "Agreeable",
+      "Natural",
+      "Disorderly",
+      "Open-minded",
+      "Angry",
+      "Well-educated",
+      "Intense",
+      "Feminine",
+      "Strong",
+      "Manipulative",
+      "Curious",
+      "Traditional",
+      "Outspoken",
+      "Strict",
+      "Emotional",
+      "Determined",
+      "Atypical",
+      "Jealous",
+      "Energetic",
+      "Serious",
+      "Creative",
+      "Wise",
+    ];
+
+    //preload stimuli
+    var pictureArray = traitArray.map(function (trait) {
+      return "pictures/" + trait + ".png";
+    });
+    var preload = {
+      type: jsPsychPreload,
+      images: pictureArray,
+    };
+    timeline.push(preload);
+
+    //capture prolific ID manually
+    var screenerTaskID = {
+      type: jsPsychSurveyText,
+      questions: [{ prompt: "Please enter your Prolific ID accurately." }],
+    };
+    timeline.push(screenerTaskID);
+
+    //Screener task english - need more screeners... check demoSurvey
+    var screenerTaskEnglish = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "Are you fluent in English?",
+          name: "Eng",
+          options: ["Yes", "No"],
+          required: true,
+          horizontal: true,
+        },
+      ],
+    };
+    timeline.push(screenerTaskEnglish);
+
+    //instructions page
+    var instructionsPage = {
+      type: jsPsychInstructions,
+      pages: [
+        "Welcome to the experiment! Thank you for your participation. In this study, you will be given a word, and asked to type out the antonym, or word of most opposite meaning, for the given word. The whole experiment will take approximately XXX minutes to complete.",
+        "Please DO NOT use your browser's back or reload buttons! You will receive the Prolific Completion Code at the end of the study",
+      ],
+      show_clickable_nav: true,
+    };
+    timeline.push(instructionsPage);
+
+    //consent page
+    var consentPage = {
+      type: jsPsychInstructions,
+      pages: [
+        "Pressing the button below indicates your consent to participate.",
+      ],
+      show_clickable_nav: true,
+      button_label_next: "Consent",
+    };
+    timeline.push(consentPage);
+
+    //specific task instructions
+    var taskInstructions = {
+      type: jsPsychInstructions,
+      pages: [
+        "INSTRUCTIONS",
+        "You will be shown a word. Your task is to type the word that has the most opposite meaning to the given word.",
+        "Please only type a single word. Do not type multiple words.",
+      ],
+      show_clickable_nav: true,
+    };
+    timeline.push(taskInstructions);
+
+    traitArray = shuffleArray(traitArray); //randomize order of traits
+
+    // Function to create a task for a given trait
+    function createTraitTask(trait) {
+      //img directory for trait stimuli (scale)
+      var img =
+        '<img src="pictures/' + trait + '.png" style="width:800px;"></img>';
+
+      //free response task - provide the antonym
+      var taskAntonym = {
+        type: jsPsychSurveyText,
+        preamble: img,
+        data: { trait: trait },
+        questions: [
+          {
+            prompt:
+              "If you were asked to rate someone's personality on the following 1-7 scale, with 7 being <strong>" +
+              trait +
+              "</strong>, what trait word best represents the opposite of being <strong>" +
+              trait +
+              "</strong> that you'd expect to see on the opposite side of the scale? It can only be a SINGLE word.",
+          },
+        ],
+      };
+
+      //rate confidence in antonym task
+      var taskRate = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus: function () {
+          var lastTrialData = jsPsych.data.getLastTrialData();
+          var previousResponse = lastTrialData.values()[0].response.Q0;
+          return (
+            '<div style="width:500px;"> <p>How strongly do you feel that <strong>' +
+            previousResponse +
+            "</strong> is a good fit for the opposite side of the <strong>" +
+            trait +
+            "</strong> scale?</p></div>"
+          );
+        },
+        require_movement: true,
+        data: { trait: trait },
+        min: 1,
+        max: 7,
+        step: 1,
+        slider_start: 4,
+        labels: ["1", "2", "3", "4", "5", "6", "7"],
+      };
+
+      //return both tasks
+      return [taskAntonym, taskRate];
+    }
+
+    // Loop through the traitArray and create tasks for each trait
+    for (var i = 0; i < traitArray.length; i++) {
+      var trait = traitArray[i];
+
+      // Create a task for the current trait
+      var [antonymTask, rateTask] = createTraitTask(trait);
+
+      // Add tasks to the timeline
+      timeline.push(antonymTask);
+      timeline.push(rateTask);
+    }
+
+    //get demo info
+    //free resp: age
+    //mult choice: religion, gender, hispanic, race, sexOrientation, education
+    var taskAge = {
+      type: jsPsychSurveyText,
+      questions: [{ prompt: "What is your age?", name: "age" }],
+    };
+    timeline.push(taskAge);
+
+    //race demo question
+    var TaskDemoRace = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "With which race/ethnicity do you most identify?",
+          name: "race",
+          options: [
+            "American Indian or Alaska Native",
+            "Asian",
+            "Black or African-American",
+            "Native Hawaiian or Other Pacific Islander",
+            "White",
+            "Other",
+          ],
+          required: true,
+        },
+      ],
+    };
+    timeline.push(TaskDemoRace);
+
+    //demo questions
+    var taskDemo = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "Do you consider yourself to be Hispanic or Latino?",
+          name: "hispanic",
+          options: [
+            "Hispanic or Latino",
+            "Not Hispanic or Latino",
+            "I do not wish to provide this information",
+          ],
+          required: true,
+        },
+        {
+          prompt: "With which gender do you most identify?",
+          name: "gender",
+          options: [
+            "Male",
+            "Female",
+            "Not otherwise specified",
+            "I do not with to provide this information",
+          ],
+          required: true,
+        },
+        {
+          prompt: "With which sexual orientation do you most identify?",
+          name: "sexOrientation",
+          options: [
+            "Heterosexual or straight",
+            "Gay or lesbian",
+            "Bisexual",
+            "Not otherwise specified",
+            "I do not with to provide this information",
+          ],
+          required: true,
+        },
+        {
+          prompt: "What is the highest level of school that you completed?",
+          name: "education",
+          options: [
+            "No schooling completed",
+            "Some Highschool",
+            "Highschool",
+            "GED",
+            "Some College",
+            "Associates degree",
+            "Bachelor's degree",
+            "Master's degree",
+            "Professional degree",
+            "Doctorate degree",
+          ],
+          required: true,
+        },
+      ],
+      //provide Prolific completion link when finished
+      on_finish: function () {
+        jsPsych.endExperiment(`<p>You've finished the last task. Thanks for participating!</p>
+    <p><a href="https://app.prolific.co/submissions/complete?cc=XXXXXX">Click here to return to Prolific and complete the study</a>.</p>`);
+      },
+    };
+    timeline.push(taskDemo);
+
+    //runs the experiment
+    jsPsych.run(timeline);
+  </script>
+</html>

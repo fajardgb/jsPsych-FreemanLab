@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="/webmt/scripts/jspsych/jspsych.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-survey-text.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-survey-likert.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-instructions.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-preload.js"></script>
+    <script src="/webmt/scripts/jspsych/plugin-html-slider-response.js"></script>
+    <link
+      href="/webmt/scripts/jspsych/jspsych.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body></body>
+  <script>
+
+    //shuffling array
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // Generate a random index from 0 to i
+
+        // Swap array[i] and array[j]
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // //save data to server
+    function saveData(data) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'save.php'); 
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({filedata: data}));    
+}
+    
+    //start jsPsych experiment
+    var jsPsych = initJsPsych({
+      show_progress_bar: true,
+      on_finish: function(){
+        console.log("End of experiment");
+        var data = jsPsych.data.get().csv(); //get and save data
+        saveData(data);
+        jsPsych.data.get().localSave('csv','test.csv')
+      }
+    });
+
+    //create timeline
+    var timeline = [];
+
+    //trait array
+    var traitArray =['trustworthy', 'youthful', 'old', 'mean', 'energetic', 'cringe'];
+    traitArray = shuffleArray(traitArray);
+
+    var trait1 = traitArray[0];
+    var trait2 = traitArray[1];
+    var trait3 = traitArray[2];
+    var trait4 = traitArray[3];
+    var trait5 = traitArray[4];
+    var trait6 = traitArray[5];
+
+    //capture prolific ID manually
+    var screenerTaskID = {
+      type: jsPsychSurveyText,
+      questions: [{ prompt: "Please enter your Prolific ID accurately." }],
+    };
+    timeline.push(screenerTaskID);
+
+    //instructions page
+    var instructionsPage = {
+      type: jsPsychInstructions,
+      pages: [
+        "Welcome to the experiment! Thank you for your participation.",
+        "In this study, you will be given a pair of trait words, and you will be asked to rate how similar the two traits are.",
+        "The questions will be formatted as follows: <strong>How likely are X people to be Y?</strong>",
+        "The whole experiment will take approximately ??? minutes to complete.",
+        "Please DO NOT use your browser's back or reload buttons! You will receive the Prolific Completion Code at the end of the study",
+      ],
+      show_clickable_nav: true,
+    };
+    timeline.push(instructionsPage);
+
+    //consent page
+    var consentPage = {
+      type: jsPsychInstructions,
+      pages: [
+        "Pressing the button below indicates your consent to participate.",
+      ],
+      show_clickable_nav: true,
+      button_label_next: "Consent",
+    };
+    timeline.push(consentPage);
+
+    //specific task instructions
+    var taskInstructions = {
+      type: jsPsychInstructions,
+      pages: [
+        "You will be shown a pair of trait words. Your task is to rate how similar the given pair of traits word is in the form of: <strong>How likely are X people to be Y?</strong>",
+      ],
+      show_clickable_nav: true,
+    };
+    timeline.push(taskInstructions);
+
+    // Function to create a task for a given traits
+    //var likert_scale = ['1 (not at all likely)', '2', '3', '4 (neutral)', '5', '6', '7 (very likely)'];
+    
+    function createSimTask(trait1, trait2) {
+      //the prompt/question
+      //var q = "How likely are <strong>" + trait1 + "</strong> people to be <strong>" + trait2 + "</strong>?";
+
+      var simTask = {
+        type: jsPsychSurveyLikert,
+        data: { trait1: trait1, trait2: trait2 },
+        scale_width: 800,
+        questions: [
+          {
+            prompt: "How likely are <strong>" + trait1 + "</strong> people to be <strong>" + trait2 + "</strong>?",
+            required: true,
+            labels: [
+              '1 (not at all likely)', 
+              '2', 
+              '3', 
+              '4 (neutral)', 
+              '5', 
+              '6', 
+              '7 (very likely)']
+          }
+        ]
+      };
+      return [simTask];
+
+    }
+
+    // Loop through the traitArray and create tasks for each trait
+    for (var i = 0; i < traitArray.length; i=i+2) {
+      var trait1 = traitArray[i];
+      var trait2 = traitArray[i+1];
+      console.log(trait1, trait2)
+
+      // Create a task for the current trait
+      var [simTask] = createSimTask(trait1, trait2);
+
+      // Add tasks to the timeline
+      timeline.push(simTask);
+    }
+
+    //get demo info
+    //free resp: age
+    //mult choice: religion, gender, hispanic, race, sexOrientation, education
+    var taskAge = {
+      type: jsPsychSurveyText,
+      questions: [{ prompt: "What is your age?", name: "age" }],
+    };
+    timeline.push(taskAge);
+
+    //race demo question
+    var TaskDemoRace = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "With which race/ethnicity do you most identify?",
+          name: "race",
+          options: [
+            "American Indian or Alaska Native",
+            "Asian",
+            "Black or African-American",
+            "Native Hawaiian or Other Pacific Islander",
+            "White",
+            "Other",
+          ],
+          required: true,
+        },
+      ],
+    };
+    timeline.push(TaskDemoRace);
+
+    //demo questions
+    var taskDemo = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "Do you consider yourself to be Hispanic or Latino?",
+          name: "hispanic",
+          options: [
+            "Hispanic or Latino",
+            "Not Hispanic or Latino",
+            "I do not wish to provide this information",
+          ],
+          required: true,
+        },
+        {
+          prompt: "With which gender do you most identify?",
+          name: "gender",
+          options: [
+            "Male",
+            "Female",
+            "Not otherwise specified",
+            "I do not with to provide this information",
+          ],
+          required: true,
+        },
+        {
+          prompt: "With which sexual orientation do you most identify?",
+          name: "sexOrientation",
+          options: [
+            "Heterosexual or straight",
+            "Gay or lesbian",
+            "Bisexual",
+            "Not otherwise specified",
+            "I do not with to provide this information",
+          ],
+          required: true,
+        },
+        {
+          prompt: "What is the highest level of school that you completed?",
+          name: "education",
+          options: [
+            "No schooling completed",
+            "Some Highschool",
+            "Highschool",
+            "GED",
+            "Some College",
+            "Associates degree",
+            "Bachelor's degree",
+            "Master's degree",
+            "Professional degree",
+            "Doctorate degree",
+          ],
+          required: true,
+        },
+      ],
+      //provide Prolific completion link when finished
+      on_finish: function() {
+        jsPsych.endExperiment(`<p>You've finished the last task. Thanks for participating!</p>
+    <p><a href="https://app.prolific.co/submissions/complete?cc=XXXXXXXX">Click here to return to Prolific and complete the study</a>.</p>`)
+      }
+    };
+    timeline.push(taskDemo);
+
+    //runs the experiment
+    jsPsych.run(timeline);
+  </script>
+</html>
