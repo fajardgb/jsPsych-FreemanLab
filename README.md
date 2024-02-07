@@ -98,11 +98,34 @@ I implemented this already, see this [example](https://github.com/fajardgb/jsPsy
 Needed: 
 1. Need each target trait to be compared with each other trait. 
 
-## Passive Viewing of Images
-Passively view
+## Passive Viewing of Images (or 1-back)
+Passively view images. Each image is shown for 2s, ISI of 2-6s (randomly sampled to start with). 
+
+Needed: 
+1. Add probe condition, for 1-back task, so some images are repeated twice in a row. If an image is repeated, the participant should press a button. 
 
 ## Mousetracking
 Implement any mousetracking script!
+
+## Implicit Association Test (IAT)
+I made this one for a post-scan task, but it is embarassingly hard coded. See the example. 
+
+Needed: 
+1. make things not hard-coded and more customizable
+
+
+
+## Videos: Rate at end
+Watch a video, rate it after it is over
+
+## Videos: Rate halfway throug
+Watch a video, be able to pause/rate it halfway thorugh.
+
+## Videos: FreeResponse (halfway through at end also)
+Watch a video, and make it be able to input a word halfway through the video
+
+Make it be pausable? 
+
 
 
 ## Semantic Decision Task
@@ -110,6 +133,25 @@ Implement any mousetracking script!
 Prime participant with an image, then ask them to respond (categorize) a word (eg: as good or bad)
 
 ![SDT](imgs/SDT.png)
+
+## Who-Said-What task
+
+3 phases: encoding, distractor, retrieval
+
+Encoding:
+- show face for 3s, 2-4s ISI, 7s face + sentence
+
+Distractor: 
+- show X dots on the screen, followed by a number. Respond if the number is less than or more than the number of dots shown prior. 
+
+Retrieval:
+- Show sentence, 2-4s ISI, 6s grid
+- Make a red box around the grid - they can move it around left to right to make decision about WHO-SAID-WHAT
+
+
+
+
+![WSW](imgs/WSW.png)
 
 
 
