@@ -46,12 +46,12 @@ Ordered roughly by difficulty
 ## Survey: Instructions
 
 ## Survey: MRS, SPS, NFCS, RES, FT
-Simple surveys, if interested in owrking on them let me know and I'll show you what they look like! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
+Simple surveys, if interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
 
 ## Survey: Consent Page
 See example on Github
 
-Importantly, we need the script to exit/quit if the user answers the political party **attention_check** question wrong 
+Importantly, we need the script to exit/quit if the user answers the political party **attention_check** question wrong. 
 
 
 

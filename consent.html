@@ -1,0 +1,94 @@
+!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Survey</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
+    <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+
+  <script>
+    var jsPsych = initJsPsych({
+      show_progress_bar: true,
+      on_finish: function (data) {
+        jsPsych.data.displayData("csv", "sub-" + sub_id + "_data.csv"); //  save data as csv
+      },
+    });
+
+    // create empty timeline
+    var timeline = [];
+
+    var welcome = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "Welcome to OUR TASK NAME HERE! Press any key to continue.",
+    };
+    timeline.push(welcome);
+
+    //capture prolific ID manually
+    var screenerTaskID = {
+      type: jsPsychSurveyText,
+      questions: [{ prompt: "Please enter your Prolific ID accurately." }],
+    };
+    timeline.push(screenerTaskID);
+
+    //Screener task english - need more screeners... check demoSurvey
+    var screenerTaskEnglish = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt: "Are you fluent in English?",
+          name: "Eng",
+          options: ["Yes", "No"],
+          required: true,
+          horizontal: true,
+        },
+      ],
+    };
+    timeline.push(screenerTaskEnglish);
+
+    var questions = {
+      type: jsPsychSurveyText,
+      questions: [
+        { prompt: "Please enter your Prolific ID accurately.", name: "ID" },
+        { prompt: "What is your current state?", name: "state" },
+        { prompt: "What is your age?", name: "age" },
+        {
+          prompt: "Are you fluent in English?",
+          options: ["Yes", "No"],
+          name: "English",
+        },
+      ],
+    };
+    timeline.push(questions);
+
+    var attention_check = {
+      type: jsPsychSurveyMultiChoice,
+      questions: [
+        {
+          prompt:
+            'Please read the following instructions: Recent research on decision making has shown that choices are affected by political party affiliation. To help us understand how people from different backgrounds make decisions, we are interested in information about you. Specifically, we want to know if you actually read any of the instructions we give at the beginning of our survey; if not, some results may not tell us very much about decision making and perception in the real world. To show that you have read the instructions, please ignore the questions about political party affiliation below and simply select "Other" at the bottom. For which political party do you typically vote?',
+          options: [
+            "Democratic",
+            "Republican",
+            "Independent",
+            "Libertarian",
+            "Green Party",
+            "Other",
+          ],
+          name: "attention_check",
+        },
+      ],
+    };
+    timeline.push(attention_check);
+
+    var thanks = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "Thank you for completing the survey!",
+    };
+    timeline.push(thanks);
+    jsPsych.run(timeline);
+  </script>
+</html>
