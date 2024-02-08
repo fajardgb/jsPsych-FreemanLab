@@ -3,7 +3,7 @@ Welcome! [jsPsych](https://www.jspsych.org/7.3/) is a great tool for conducting 
 
 Our lab’s current way of running online experiments is very outdated (Jon hired a software engineer to set it up around 2012). Some scripts don’t run anymore, certain links are broken, and there is no documentation - making it hard to fix bugs/issues and customize parameters. Not to mention, you can’t use ChatGPT/Copilot 😅. 
 
-When writing these scripts, please make sure they are **well-commented and easily customizable**. **Try not to hard code any parameters/settings** - make sure things are easily changeable. Here are some concrete examples of what I mean: 
+When writing these scripts, please make sure they are **well-commented and easily customizable** (ideally via a config file). **Try not to hard code any parameters/settings** - make sure things are easily changeable. Here are some concrete examples of what I mean: 
 
 - **Example 1**: when setting the image height/wide, make this changeable at the top of the script. 
 - **Example 2**: when rating images, make it loop through a list/array of images/image_names - don’t make it so you have to call an image every time. 
@@ -15,30 +15,41 @@ As with any good psychology experiment, randomization is a must. Make sure there
 
 There are many great ready-to-go scripts and examples available [online](https://github.com/jspsych/jsPsych/tree/main/examples). Feel free to use them - there is no need to start everything from scratch! 
 
-
 # Getting Started
 1. Go through the jsPsych [tutorials](https://www.jspsych.org/7.3/tutorials/hello-world/). 
 2. Indicate on **Slack which project you are working** on! We don’t want 2 people working on the same thing, and there is lots to choose from!
-3. To start a script, use this function: 
-```javascript
-var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
-
-var jsPsych = initJsPsych({
-      show_progress_bar: true,
-      on_finish: function () {
-        console.log("End of experiment");
-        jsPsych.data.get(localSave("csv", "sub-" + sub_id + "_data.csv"));
-      },
-    });
-```
-4. Include a brief **Consent** page at the start, **Instructions** page(s) explaining the task before they begin, and a **Demographics** page at the end!
-   1. Check out the [consent template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html), and the [demographics template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html)!
-4. Name each trial with an intuitive name. For data saving later
-   1. E.g: don't call a raiting trial simply 'Task1'.
+4. To start a script, clone this repo, then **make a copy of the SampleExperiment folder**. See the [template](#template) section below for more details.
+4. Name each trial with an intuitive name (for data saving later)
+   1. E.g: don't call a rating trial simply 'Task1'.
 5. If you are working on a script that requires images/word_vectors, you can use your own images/words lists, and loop over them for the experiments. 
    1. upload sample images to GitHub?
 6. Additional scripts to preprocess/clean/analyze the data would be great but not necessary at the moment :)... just something to think about!
-7. Once done, push scripts to the github page!
+7. Push your folder to the github page!
+
+# Template
+[SampleExperiment](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/SampleExperiment) serves as a template experiment that does the following:
+- Shows the consent form at the beginning (imported from [consent.js](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js))
+- Shows the demographics survey at the end (imported from [demographics.js](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.js))
+- Imports variables from a config file
+- Saves data as a csv at the end with a random subject ID
+
+You can **make a copy** of the SampleExperiment folder to start your own script! Simply code your trials as normal in the **main.js** file between the `//EXPERIMENT CONTENT GOES HERE` and `//END OF EXPERIMENT CONTENT` comments. You can add any variable to the config file like so:
+```javascript
+      //Comment explaining what the variable does
+      exampleVariable: "Something", //don't forget the comma!
+
+      //You can use any variable, not just text!
+      numberVariable: 3;
+}
+```
+
+The config file is already imported into the main file, so you can use those variables in main.js by doing `config.variableName`. Here is an example"
+```javascript
+var task = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: config.instructions
+};
+```
 
 # Projects
 Ordered roughly by difficulty
@@ -47,7 +58,8 @@ Ordered roughly by difficulty
 See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.html)!
 
 Things that need change: 
-1. Make this script be able to be integrated into the end of **ALL** scripts.
+~~1. Make this script be able to be integrated into the end of **ALL** scripts.~~
+Completed!
 
 ## Survey: MRS, SPS, NFCS, RES, FT
 Easy surveys - would be a good start. If interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
@@ -58,13 +70,14 @@ Easy surveys - would be a good start. If interested in working on them let me kn
 See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html)!
 
 Things that need change:
-1. Make things less hard-coded, more fluid
-   1. eg: change welcome to add variable for task_name to be defined above!
-2. Make all the questions show up on the same page 
-   1. Not sure if this is possible? Since different types (eg; mult choice, free responses, etc)
-3. Make the script exit/quit if the user answers the political party **attention_check** question wrong
-4. Make the script exit/quit if the user is **not fluent in English.**
-5. Make this script be able to be integrated at the end of **ALL** scripts. 
+~~1. Make things less hard-coded, more fluid~~
+   ~~1. eg: change welcome to add variable for task_name to be defined above!~~
+~~2. Make all the questions show up on the same page~~
+   ~~1. Not sure if this is possible? Since different types (eg; mult choice, free responses, etc)~~
+~~3. Make the script exit/quit if the user answers the political party **attention_check** question wrong~~
+~~4. Make the script exit/quit if the user is **not fluent in English.**~~
+~~5. Make this script be able to be integrated at the end of **ALL** scripts.~~
+Completed!
 
 ## Rating Images: single trait at a time
 
