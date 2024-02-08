@@ -1,6 +1,5 @@
 var welcome = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: "Welcome to OUR-TASK-NAME-HERE! Press any key to continue.",
 };
 
 var questions = {
@@ -40,6 +39,7 @@ var questions = {
 };
 
 //function to add tasks to timeline
-export function pushConsentForm(timeline) {
+export function pushConsentForm(timeline, name) {
+    welcome.stimulus = "Welcome to " + name + ". Press any key to continue.";
     timeline.push(welcome, questions);
 }

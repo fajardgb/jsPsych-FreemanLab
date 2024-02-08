@@ -13,14 +13,14 @@ var timeline = [];
 
 //Adds consent form to timeline
 import { pushConsentForm } from '../consent.js';
-pushConsentForm(timeline);
+pushConsentForm(timeline, "Sample Experiment"); //Provides name of experiment
 
 //EXPERIMENT CONTENT GOES HERE
-var experiment = {
+var task = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: "This is an example experiment. Press any key."
+    stimulus: "This is an example task. Press any key."
 };
-timeline.push(experiment);
+timeline.push(task);
 //END OF EXPERIMENT CONTENT
 
 //Adds demographics survey to timeline
