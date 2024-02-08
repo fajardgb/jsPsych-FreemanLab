@@ -5,9 +5,9 @@ Our lab’s current way of running online experiments is very outdated (Jon hire
 
 When writing these scripts, please make sure they are **well-commented and easily customizable** (ideally via a config file). **Try not to hard code any parameters/settings** - make sure things are easily changeable. Here are some concrete examples of what I mean: 
 
-- **Example 1**: when setting the image height/wide, make this changeable at the top of the script. 
+- **Example 1**: when setting the image height/wide, make this changeable in the config file. 
 - **Example 2**: when rating images, make it loop through a list/array of images/image_names - don’t make it so you have to call an image every time. 
-- **Example 3**: When you say “this experiment takes {XXX} minutes to complete” in the instructions page, make sure that XXX is a variable at the top of your script
+- **Example 3**: When you say “this experiment takes {XXX} minutes to complete” in the instructions page, make sure that XXX is a variable in config.
 
 This is so folks who join the lab and are not as technologically inclined as you have an easier time setting up their own experiments 😀. 
 
@@ -24,7 +24,7 @@ There are many great ready-to-go scripts and examples available [online](https:/
 5. If you are working on a script that requires images/word_vectors, you can use your own images/words lists, and loop over them for the experiments. 
    1. upload sample images to GitHub?
 6. Additional scripts to preprocess/clean/analyze the data would be great but not necessary at the moment :)... just something to think about!
-7. Push your folder to the github page!
+7. Push your folder to the github repo!
 
 # Template
 [SampleExperiment](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/SampleExperiment) serves as a template experiment that does the following:
@@ -35,11 +35,12 @@ There are many great ready-to-go scripts and examples available [online](https:/
 
 You can **make a copy** of the SampleExperiment folder to start your own script! Simply code your trials as normal in the **main.js** file between the `//EXPERIMENT CONTENT GOES HERE` and `//END OF EXPERIMENT CONTENT` comments. You can add any variable to the config file like so:
 ```javascript
+const config = {
       //Comment explaining what the variable does
       exampleVariable: "Something", //don't forget the comma!
 
-      //You can use any variable, not just text!
-      numberVariable: 3;
+      //You can make any variable, not just text!
+      numberVariable: 3,
 }
 ```
 
@@ -48,7 +49,7 @@ The config file is already imported into the main file, so you can use those var
 var task = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: config.instructions //this uses the variable from config
-};
+}
 ```
 
 # Projects
