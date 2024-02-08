@@ -11,16 +11,25 @@ var jsPsych = initJsPsych({
 });
 var timeline = [];
 
+//Import config file
+import config from "./config.js"
+
 //Adds consent form to timeline
 import { pushConsentForm } from '../consent.js';
-pushConsentForm(timeline, "Sample Experiment"); //Provides name of experiment
+pushConsentForm(jsPsych, timeline, config.experimentName);
 
 //EXPERIMENT CONTENT GOES HERE
+var instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: config.instructions,
+    choices: ['Continue']
+};
+
 var task = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: "This is an example task. Press any key."
 };
-timeline.push(task);
+timeline.push(instructions, task);
 //END OF EXPERIMENT CONTENT
 
 //Adds demographics survey to timeline
