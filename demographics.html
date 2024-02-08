@@ -6,6 +6,7 @@
     <script src="jspsych/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="jspsych/plugin-preload.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
@@ -17,9 +18,11 @@
       show_progress_bar: true,
       on_finish: function () {
         console.log("End of experiment");
-        jsPsych.data.get(localSave("csv", "sub-" + sub_id + "_data.csv"));
+        jsPsych.data.get().localSave("csv", "sub-" + sub_id + "_data.csv");
       },
     });
+
+    var timeline = [];
 
     //get demo info
     //free resp: age
@@ -29,8 +32,6 @@
       questions: [{ prompt: "What is your age?", name: "age" }],
     };
     timeline.push(taskAge);
-
-    var timeline = [];
 
     //race demo question
     var TaskDemoRace = {
