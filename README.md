@@ -59,7 +59,8 @@ Ordered roughly by difficulty
 See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.js)!
 
 Things that need change: 
-~~1. Make this script be able to be integrated into the end of **ALL** scripts.~~
+1. ~~Make this script be able to be integrated into the end of **ALL** scripts.~~
+
 Completed!
 
 ## Survey: MRS, SPS, NFCS, RES, FT
@@ -71,13 +72,14 @@ Easy surveys - would be a good start. If interested in working on them let me kn
 See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js)!
 
 Things that need change:
-~~1. Make things less hard-coded, more fluid~~
-   ~~1. eg: change welcome to add variable for task_name to be defined above!~~
-~~2. Make all the questions show up on the same page~~
-   ~~1. Not sure if this is possible? Since different types (eg; mult choice, free responses, etc)~~
-~~3. Make the script exit/quit if the user answers the political party **attention_check** question wrong~~
-~~4. Make the script exit/quit if the user is **not fluent in English.**~~
-~~5. Make this script be able to be integrated at the end of **ALL** scripts.~~
+1. ~~Make things less hard-coded, more fluid~~
+   1. ~~eg: change welcome to add variable for task_name to be defined above!~~
+2. ~~Make all the questions show up on the same page~~
+   1. ~~Not sure if this is possible? Since different types (eg; mult choice, free responses, etc)~~
+3. ~~Make the script exit/quit if the user answers the political party **attention_check** question wrong~~
+4. ~~Make the script exit/quit if the user is **not fluent in English.**~~
+5. ~~Make this script be able to be integrated at the end of **ALL** scripts.~~
+
 Completed!
 
 ## Rating Images: single trait at a time
