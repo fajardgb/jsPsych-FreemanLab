@@ -43,11 +43,11 @@ You can **make a copy** of the SampleExperiment folder to start your own script!
 }
 ```
 
-The config file is already imported into the main file, so you can use those variables in main.js by doing `config.variableName`. Here is an example"
+The config file is already imported into the main file, so you can use those variables in main.js by doing `config.variableName`. Here is an example:
 ```javascript
 var task = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: config.instructions
+      stimulus: config.instructions //this uses the variable from config
 };
 ```
 
@@ -55,7 +55,7 @@ var task = {
 Ordered roughly by difficulty
 
 ## Survey: Demographics
-See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.html)!
+See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.js)!
 
 Things that need change: 
 ~~1. Make this script be able to be integrated into the end of **ALL** scripts.~~
@@ -67,7 +67,7 @@ Easy surveys - would be a good start. If interested in working on them let me kn
 ![MRS](imgs/MRS.png)
 
 ## Survey: Consent Page
-See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.html)!
+See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js)!
 
 Things that need change:
 ~~1. Make things less hard-coded, more fluid~~
