@@ -16,8 +16,8 @@ As with any good psychology experiment, randomization is a must. Make sure there
 There are many great ready-to-go scripts and examples available [online](https://github.com/jspsych/jsPsych/tree/main/examples). Feel free to use them - there is no need to start everything from scratch! 
 
 # Getting Started
-1. Go through the jsPsych [tutorials](https://www.jspsych.org/7.3/tutorials/hello-world/). 
-2. Indicate on **Slack which project you are working** on! We don’t want 2 people working on the same thing, and there is lots to choose from!
+1. Go through the jsPsych [tutorials](https://www.jspsych.org/7.3/tutorials/hello-world/). Use **option** 2 (I want to be able to do some customization, but have a simple setup; Download and host jsPsych)
+3. Indicate on **Slack which project you are working** on! We don’t want 2 people working on the same thing, and there is lots to choose from!
 4. To start a script, clone this repo, then **make a copy of the SampleExperiment folder**. See the [template](#template) section below for more details.
 4. Name each trial with an intuitive name (for data saving later)
    1. E.g: don't call a rating trial simply 'Task1'.
@@ -51,6 +51,13 @@ var task = {
       stimulus: config.instructions //this uses the variable from config
 }
 ```
+
+# Online vs. Local (+ fMRI)
+Need to add instructions on how to make things online (way we are doing it rn) versus hosting the experiments locally (for fMRI sessions)
+
+I think the only thing needed to change is how files are saved - have to make sure they are saved locally. 
+
+Also, for fMRI, need to add 'waiting for scanner' page before each run, fixation, make text bigger, anything else?
 
 # Projects
 Ordered roughly by difficulty
@@ -146,7 +153,9 @@ Watch a video, and make it be able to input a word halfway through the video
 
 Make it be pausable? 
 
+## Trust Game
 
+[wikipedia](https://en.wikibooks.org/wiki/Bestiary_of_Behavioral_Economics/Trust_Game)
 
 ## Semantic Decision Task
 
