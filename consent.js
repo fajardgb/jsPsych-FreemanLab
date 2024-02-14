@@ -1,3 +1,5 @@
+var jsPsych;
+
 var welcome = {
     type: jsPsychHtmlKeyboardResponse,
 };
@@ -7,7 +9,7 @@ var questions = {
     pages: [
         [
             {
-                //capture prolific ID manually
+                //Capture prolific ID manually
                 type: "text",
                 prompt: "Please enter your Prolific ID accurately.",
             },
@@ -35,11 +37,23 @@ var questions = {
             },
         ]
     ],
-    button_label_finish: 'Continue',
+    button_label_finish: 'Continue',   
+    on_finish: function(data) {
+        //Ends experiment early if failed english or attention check
+        //NOTE: This still leads to the regular end screen and saves data. Do we want this? 
+        if(data.response.Eng == "No") {
+            jsPsych.endExperiment();
+        } else if(data.response.attention_check != "Other") {
+            jsPsych.endExperiment();
+        }
+    }
 };
 
+
+
 //function to add tasks to timeline
-export function pushConsentForm(timeline, name) {
+export function pushConsentForm(jsPsychInstance, timeline, name) {
     welcome.stimulus = "Welcome to " + name + ". Press any key to continue.";
     timeline.push(welcome, questions);
-}
+    jsPsych = jsPsychInstance;
+};
