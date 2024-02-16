@@ -135,18 +135,75 @@
 
     }
 
-    // Loop through the traitArray and create tasks for each trait
-    for (var i = 0; i < traitArray.length; i=i+2) {
+    // Loop through the traitArray and create trait pairs 
+    // This allows for comparing traits bidirectionally.
+    var traitPairs = [];
+    for (var i = 0; i < traitArray.length; i=i+1) {
+    
       var trait1 = traitArray[i];
-      var trait2 = traitArray[i+1];
-      console.log(trait1, trait2)
+      
 
-      // Create a task for the current trait
-      var [simTask] = createSimTask(trait1, trait2);
+      for(var j = 0; j < traitArray.length; j = j+1){
+        var trait2 = traitArray[j];
+        if(trait1 == trait2){  
+          //Skip if comparing trait with same trait
+          continue;
+        }
+        
+        if(trait2 === undefined){
+          continue;
+        }
+        let pair = [trait1, trait2]
+        
+        
+        traitPairs.push(pair)
+        //console.log(trait1, trait2)
+        
+      }
+      //console.log(traitPairs)
+      
 
+    }
+
+    // This removes reverses of pairs from the array of pairs so that two traits are only compared once
+    function removeDuplicatePairs(arrayPairs) {
+      const seen = new Set(); 
+      const removed = []; 
+
+      arrayPairs.forEach(pair => {
+        const sortedPair = pair.slice().sort(); 
+        const pairKey = sortedPair.join(','); 
+        // Check if the reverse pair has been seen
+        if (!seen.has(pairKey)) {
+          seen.add(pairKey);
+          // Remove reverse pairs 
+          if (pair[0] == sortedPair[1]) {
+            removed.push(pair);
+          }
+        }
+      });
+      //console.log(seen)
+      return seen;
+    }
+
+    traitPairs = removeDuplicatePairs(traitPairs);
+
+    //Randomize traits shown 
+    traitPairs = shuffleArray(Array.from(traitPairs)) 
+    traitPairs = traitPairs.map(item => item.split(','));
+    //Set to array conversion
+
+
+    for(var i = 0; i <traitPairs.length; i = i+1){
+
+      // Create a task for the current trait pair
+      console.log(traitPairs[i][0], traitPairs[i][1])
+      var [simTask] = createSimTask(traitPairs[i][0], traitPairs[i][1]);
       // Add tasks to the timeline
       timeline.push(simTask);
+
     }
+    
 
     //get demo info
     //free resp: age
