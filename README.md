@@ -123,7 +123,7 @@ See this [paper](https://www.pnas.org/doi/full/10.1073/pnas.1807222115?doi=10.10
 I implemented this already, see this [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/GF_pairwise_sim). This might already work, but needs to be fleshed out more. 
 
 Needed: 
-1. Need each target trait to be compared with each other trait. 
+~~1. Need each target trait to be compared with each other trait.~~ 
 
 ## Passive Viewing of Images (or 1-back)
 Passively view images. Each image is shown for 2s, ISI of 2-6s (randomly sampled to start with). 
