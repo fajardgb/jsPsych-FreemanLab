@@ -141,7 +141,8 @@ function createTask(trait){
         // type:  jsPsychImageButtonResponse //if using buttons 
         stimulus: jsPsych.timelineVariable("stimulus"),
         prompt: "<p>" + "How" + trait + "is this person?" + "</p>",
-        labels: sliderconfig.sliderLabels, //if using slider change sliderconfig to buttonconfig, vice versa if using buttons
+        labels: sliderconfig.sliderLabels, //if using slider
+        //choices: buttonconfig.Labels //if using buttons
         min: sliderconfig.min, //not necessary if using buttons
         max: sliderconfig.max, //not necessary if using buttons
         slider_start: sliderconfig.start_slider, //not necessary if using buttons

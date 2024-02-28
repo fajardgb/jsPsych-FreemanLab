@@ -5,9 +5,9 @@ const config = {
     //The instructions to be shown before the experiment begins
     instructions: "You will be shown a series of images along with a trait. Please rate each image on the basis of each trait.",
 
-    //Labels displayed at equidistant locations along the slider
-    //Customizability: to add more numbers to the slider, add more numbers as strings
-    sliderLabels: ['1', '2', '3', '4', '5', '6', '7'],
+
+    //Customizability: to add more numbers as buttons, add more numbers as strings
+    Labels: ['1', '2', '3', '4', '5', '6', '7'],
 
     randomize: true,
     
