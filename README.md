@@ -33,7 +33,7 @@ There are many great ready-to-go scripts and examples available [online](https:/
 - Imports variables from a config file
 - Saves data as a csv at the end with a random subject ID
 
-You can **make a copy** of the SampleExperiment folder to start your own script! Simply code your trials as normal in the **main.js** file between the `//EXPERIMENT CONTENT GOES HERE` and `//END OF EXPERIMENT CONTENT` comments. You can add any variable to the config file like so:
+You can **make a copy** of the SampleExperiment folder to start your own script! Simply code your trials as normal in the **RateSingleImageMultipleTraits.js** file between the `//EXPERIMENT CONTENT GOES HERE` and `//END OF EXPERIMENT CONTENT` comments. You can add any variable to the config file like so:
 ```javascript
 const config = {
       //Comment explaining what the variable does
@@ -44,7 +44,7 @@ const config = {
 }
 ```
 
-The config file is already imported into the main file, so you can use those variables in main.js by doing `config.variableName`. Here is an example:
+The config file is already imported into the main file, so you can use those variables in RateSingleImageMultipleTraits.js by doing `config.variableName`. Here is an example:
 ```javascript
 var task = {
       type: jsPsychHtmlKeyboardResponse,
