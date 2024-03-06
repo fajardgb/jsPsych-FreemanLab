@@ -81,11 +81,8 @@ function createImageTaskSlider(trait){
         labels: config.sliderLabels,
         min: config.min,
         max: config.max,
-        //num_sliders: config.numsliders,
         slider_start: config.slider_start,
-        response_ends_trial: true,
-
-
+        response_ends_trial: true
     };
     return showImage;
 }
@@ -110,7 +107,6 @@ function createTaskSlider(trait){
         max: config.max,
         slider_start: config.slider_start,
         response_ends_trial: true
-
     };
     return showTask;
 }
@@ -146,15 +142,10 @@ traitArray = shuffleArray(traitArray);
 for (var i = 0; i < traitArray.length; i=i+1) {
 
     var trait = traitArray[i];
-    //var taskwithimage = createImageTaskSlider(trait) //change to createImageTaskButton(trait) if using buttons
-    var task = createImageTaskSlider(trait)
-
-    //somehow have to get image slider and non image sliders on same page
-    //timeline is an array of trials
-    //so theyhave to be on the same trial?
-
-    timeline.push(task);
-
+    var taskwithimage = createImageTaskSlider(trait) //change to createImageTaskButton(trait) if using buttons
+    var task = createTaskSlider(trait)
+    //works
+    timeline.push(taskwithimage, task);
 
 }
 
