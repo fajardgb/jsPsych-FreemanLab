@@ -1,4 +1,4 @@
-//Rates MULTIPLE images on ONE trait
+//Rates SINGLE image on MULTIPLE traits, N TRAITS at a time
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
@@ -43,10 +43,6 @@ var preload = {
     })
 };
 
-
-var imagesArray = config.imageList
-
-
 timeline.push(instructions);
 timeline.push(preload);
 
@@ -55,13 +51,32 @@ var test_stimuli = config.imageList.map(function (item) {
 });
 
 
-//Can change the string to be any trait
-var trait = "trustworthy";
 
-function createTaskSlider(image){
+//Can change the strings in this list to be any trait
+var traitArray = [
+    "trustworthy",
+    "condescending",
+    "articulate",
+    "affectionate",
+    "dignified",
+    "combative",
+    "self-critical",
+    "persistent",
+    "prejudiced",
+    "sensitive",
+    "clever",
+    "prudish",
+    "unobservant",
+    "healthy",
+    "ambitious",
+    "optimistic",
+    "grumpy",
+
+];
+function createImageTaskSlider(trait){
     var showImage = {
         type: jsPsychImageSliderResponse,
-        stimulus: 'images/' + image,
+        stimulus: "images/test1.png", //file of image to be used
         prompt: "<p>" + "How " + trait + " is this person?" + "</p>",
         labels: config.sliderLabels,
         min: config.min,
@@ -72,10 +87,10 @@ function createTaskSlider(image){
     return showImage;
 }
 
-function createTaskButton(image){
+function createImageTaskButton(trait){
     var showImage = {
         type: jsPsychImageButtonResponse,
-        stimulus: 'images/' + image,
+        stimulus: "images/test1.png", //file of image to be used
         prompt: "<p>" + "How " + trait + " is this person?" + "</p>",
         choices: config.Labels,
         response_ends_trial: true
@@ -83,8 +98,31 @@ function createTaskButton(image){
     return showImage;
 }
 
+function createTaskSlider(trait){
+    var showTask = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus:  "<p>" + "How " + trait + " is this person?" + "</p>",
+        labels: config.sliderLabels,
+        min: config.min,
+        max: config.max,
+        slider_start: config.slider_start,
+        response_ends_trial: true
+    };
+    return showTask;
+}
+
+function createTaskButton(trait){
+    var showTask = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus:  "<p>" + "How " + trait + " is this person?" + "</p>",
+        choices: config.Labels,
+        response_ends_trial: true
+    };
+    return showTask;
+}
+
 function shuffleArray(array) {
-    for (var i = test_stimuli.length - 1; i > 0; i--) {
+    for (var i = traitArray.length - 1; i > 0; i--) {
 
         // Generate random number
         var j = Math.floor(Math.random() * (i + 1));
@@ -98,14 +136,16 @@ function shuffleArray(array) {
 }
 
 //randomize
-imagesArray = shuffleArray(imagesArray);
+traitArray = shuffleArray(traitArray);
 
 //Loop through traits for single image
-for (var i = 0; i < imagesArray.length; i=i+1) {
+for (var i = 0; i < traitArray.length; i=i+1) {
 
-    var image = imagesArray[i];
-    var task = createTaskSlider(image) //change to createTaskButton(trait) if using buttons
-    timeline.push(task);
+    var trait = traitArray[i];
+    var taskwithimage = createImageTaskSlider(trait) //change to createImageTaskButton(trait) if using buttons
+    var task = createTaskSlider(trait)
+    //works
+    timeline.push(taskwithimage, task);
 
 }
 
