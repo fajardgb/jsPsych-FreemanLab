@@ -91,15 +91,15 @@ Completed!
 
 ## Rating Images: single trait at a time
 
-Implement a script that shows an image, and asks to rate it on a specific trait with 
-1. scale (button response)
-2. slider
+~~Implement a script that shows an image, and asks to rate it on a specific trait with~~
+~~1. scale (button response)~~
+~~2. slider~~
 
 Customizability:
-1. be able to easily change traits/words (dimensions you are rating images on)
-2. loop over an array of image names for a single trait
+~~1. be able to easily change traits/words (dimensions you are rating images on)~~
+~~2. loop over an array of image names for a single trait~~
 3. loop over an array of traits/words for a single image
-4. be able to change scale easily (eg: from 1-7 to 1-9)
+~~4. be able to change scale easily (eg: from 1-7 to 1-9)~~
 
 ## Rating Images: two traits at a time
 
