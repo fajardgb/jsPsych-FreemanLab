@@ -1,4 +1,4 @@
-//Rates SINGLE image on MULTIPLE traits, ONE TRAIT at a time
+//Rates SINGLE image on MULTIPLE traits, N TRAITS at a time
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
@@ -19,7 +19,7 @@ var timeline = [];
 //Import config file
 //If want to rate images with sliders, import from "./sliderconfig.js"
 //If want to rate images with buttons, import from "./buttonconfig.js"
-import config from "./buttonconfig.js"
+import config from "./sliderconfig.js"
 
 
 //Adds consent form to timeline
@@ -73,7 +73,7 @@ var traitArray = [
     "grumpy",
 
 ];
-function createTaskSlider(trait){
+function createImageTaskSlider(trait){
     var showImage = {
         type: jsPsychImageSliderResponse,
         stimulus: "images/test1.png", //file of image to be used
@@ -81,13 +81,16 @@ function createTaskSlider(trait){
         labels: config.sliderLabels,
         min: config.min,
         max: config.max,
+        //num_sliders: config.numsliders,
         slider_start: config.slider_start,
-        response_ends_trial: true
+        response_ends_trial: true,
+
+
     };
     return showImage;
 }
 
-function createTaskButton(trait){
+function createImageTaskButton(trait){
     var showImage = {
         type: jsPsychImageButtonResponse,
         stimulus: "images/test1.png", //file of image to be used
@@ -96,6 +99,30 @@ function createTaskButton(trait){
         response_ends_trial: true
     };
     return showImage;
+}
+
+function createTaskSlider(trait){
+    var showTask = {
+        type: jsPsychHtmlSliderResponse,
+        stimulus:  "<p>" + "How " + trait + " is this person?" + "</p>",
+        labels: config.sliderLabels,
+        min: config.min,
+        max: config.max,
+        slider_start: config.slider_start,
+        response_ends_trial: true
+
+    };
+    return showTask;
+}
+
+function createTaskButton(trait){
+    var showTask = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus:  "<p>" + "How " + trait + " is this person?" + "</p>",
+        choices: config.Labels,
+        response_ends_trial: true
+    };
+    return showTask;
 }
 
 function shuffleArray(array) {
@@ -119,8 +146,15 @@ traitArray = shuffleArray(traitArray);
 for (var i = 0; i < traitArray.length; i=i+1) {
 
     var trait = traitArray[i];
-    var task = createTaskButton(trait) //change to createTaskButton(trait) if using buttons
+    //var taskwithimage = createImageTaskSlider(trait) //change to createImageTaskButton(trait) if using buttons
+    var task = createImageTaskSlider(trait)
+
+    //somehow have to get image slider and non image sliders on same page
+    //timeline is an array of trials
+    //so theyhave to be on the same trial?
+
     timeline.push(task);
+
 
 }
 

@@ -62,7 +62,6 @@ function createTaskSlider(image){
     var showImage = {
         type: jsPsychImageSliderResponse,
         stimulus: 'images/' + image,
-        //stimulus: 'images/test2.png',
         prompt: "<p>" + "How " + trait + " is this person?" + "</p>",
         labels: config.sliderLabels,
         min: config.min,
@@ -103,7 +102,6 @@ imagesArray = shuffleArray(imagesArray);
 
 //Loop through traits for single image
 for (var i = 0; i < imagesArray.length; i=i+1) {
-    //WHY DOESNT IMAGE FILE SHOW UP.
 
     var image = imagesArray[i];
     var task = createTaskSlider(image) //change to createTaskButton(trait) if using buttons
