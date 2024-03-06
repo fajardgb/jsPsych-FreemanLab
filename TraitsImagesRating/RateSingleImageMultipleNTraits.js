@@ -144,7 +144,7 @@ for (var i = 0; i < traitArray.length; i=i+1) {
     var trait = traitArray[i];
     var taskwithimage = createImageTaskSlider(trait) //change to createImageTaskButton(trait) if using buttons
     var task = createTaskSlider(trait)
-    //works
+    //need to figure out how to display N sliders at once
     timeline.push(taskwithimage, task);
 
 }

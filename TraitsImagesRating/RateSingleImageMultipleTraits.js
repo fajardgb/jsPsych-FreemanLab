@@ -19,7 +19,7 @@ var timeline = [];
 //Import config file
 //If want to rate images with sliders, import from "./sliderconfig.js"
 //If want to rate images with buttons, import from "./buttonconfig.js"
-import config from "./buttonconfig.js"
+import config from "./sliderconfig.js"
 
 
 //Adds consent form to timeline
@@ -119,7 +119,7 @@ traitArray = shuffleArray(traitArray);
 for (var i = 0; i < traitArray.length; i=i+1) {
 
     var trait = traitArray[i];
-    var task = createTaskButton(trait) //change to createTaskButton(trait) if using buttons
+    var task = createTaskSlider(trait) //change to createTaskButton(trait) if using buttons
     timeline.push(task);
 
 }
