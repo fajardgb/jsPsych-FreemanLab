@@ -138,7 +138,7 @@ Implement any mousetracking script!
 I made this one for a post-scan task, but it is embarassingly hard coded. See the [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/IAT). 
 
 Needed: 
-1. make things not hard-coded and more customizable
+~~1. make things not hard-coded and more customizable~~
 
 
 
