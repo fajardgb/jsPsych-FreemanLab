@@ -32,7 +32,8 @@ pushConsentForm(jsPsych, timeline, config.experimentName);
 var instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: config.instructions,
-    choices: ['Continue']
+    choices: ['Continue'],
+    post_trial_gap: 1500,
 };
 
 
