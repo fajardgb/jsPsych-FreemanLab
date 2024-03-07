@@ -17,6 +17,17 @@ const config = {
         "<img src='img/white/w5.png'></img>  " + "<img src='img/white/w6.png'></img><br><br>" +
         "There are seven parts. The instructions change for each part. Pay attention!<br><br>" +
         "</p>",
+
+    //Can customize these variables for jsPsych IAT HTML or image instance
+    html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+    bottom_instructions: '<p>If you press the wrong key, a red X will appear. Press the other key to continue</p>',
+    force_correct_key_press: true,
+    display_feedback: true,
+    trial_duration: 3000,
+    left_category_key: 'e',
+    right_category_key: 'i',
+    response_ends_trial: true,
+
 }
 
 export default config;
