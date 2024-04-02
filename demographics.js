@@ -9,6 +9,7 @@ var taskAge = {
 //race demo question
 var TaskDemoRace = {
     type: jsPsychSurveyMultiChoice,
+    data: {trial_name: 'demographics'},
     questions: [
         {
             prompt: "With which race/ethnicity do you most identify?",

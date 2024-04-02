@@ -10,6 +10,7 @@ var jsPsych = initJsPsych({
     },
 });
 var timeline = [];
+jsPsych.data.addProperties({subject_id: sub_id});
 
 //Import config file
 import config from "./config.js"
@@ -38,6 +39,7 @@ var instructions = {
 
 var showVideo = {
     type: jsPsychVideoSliderContinuousResponse,
+    data: {trial_name: 'video'},
     stimulus: jsPsych.timelineVariable("stimulus"),
     height: config.videoHeight,
     width: config.videoWidth,
@@ -59,6 +61,8 @@ var trial = {
     timeline: [showVideo],
     timeline_variables: test_stimuli,
     randomize_order: config.randomize,
+    //Repeatedly give one video, don't give the list
+    //Make it possible to put stuff between videos
 };
 
 timeline.push(preload, instructions, trial);

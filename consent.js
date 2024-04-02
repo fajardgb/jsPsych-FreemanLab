@@ -6,6 +6,7 @@ var welcome = {
 
 var questions = {
     type: jsPsychSurvey,
+    data: {trial_name: 'consent'},
     pages: [
         [
             {
@@ -37,7 +38,7 @@ var questions = {
             },
         ]
     ],
-    button_label_finish: 'Continue',   
+    button_label_finish: 'Continue',
     on_finish: function(data) {
         //Ends experiment early if failed english or attention check
         //NOTE: This still leads to the regular end screen and saves data. Do we want this? 
