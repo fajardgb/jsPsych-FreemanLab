@@ -9,14 +9,14 @@ var jsPsych = initJsPsych({
         jsPsych.data.get().localSave("csv", "sub-" + sub_id + "_data.csv");
     },
 });
-var timeline = [];
+
 
 //Import config file
 import config from "./config.js"
 
 //Adds consent form to timeline
-import { pushConsentForm } from '../consent.js';
-pushConsentForm(jsPsych, timeline, config.experimentName);
+import {pushConsentForm} from '../consent.js';
+
 
 //EXPERIMENT CONTENT GOES HERE
 var instructions = {
@@ -25,17 +25,25 @@ var instructions = {
     choices: ['Continue']
 };
 
+var timeline = []
+pushConsentForm(jsPsych, timeline, config.experimentName);
+
+var identities   = ['European Americans', 'African Americans'];
+var labels = ['GOOD', 'BAD'];
+
 // manually preload images due to presenting them with timeline variables
-var images = ['img/white/w1.png', 'img/white/w2.png', 'img/white/w3.png', 'img/white/w4.png', 'img/white/w5.png', 'img/white/w6.png',
-    'img/black/b1.png', 'img/black/b2.png', 'img/black/b3.png', 'img/black/b4.png', 'img/black/b5.png', 'img/black/b6.png'];
+var images1 = ['img/white/w1.png', 'img/white/w2.png', 'img/white/w3.png', 'img/white/w4.png', 'img/white/w5.png', 'img/white/w6.png',];
+
+var images2 = ['img/black/b1.png', 'img/black/b2.png', 'img/black/b3.png', 'img/black/b4.png', 'img/black/b5.png', 'img/black/b6.png'];
 
 
-var traits = ["Enjoy","Smiling","Glorious","Beautiful","Fantastic","Friend","Cheer","Joyous","Awful","Bothersome","Pain",
-    "Nasty","Hurtful","Rotten","Evil", "Annoy" ];
+var traits1 = ["Enjoy","Smiling","Glorious","Beautiful","Fantastic","Friend","Cheer","Joyous"];
+
+var traits2 = ["Awful","Bothersome","Pain", "Nasty","Hurtful","Rotten","Evil", "Annoy" ];
 
 var preload = {
     type: jsPsychPreload,
-    images: images
+    images: images1, images2
 };
 
 timeline.push(instructions);
@@ -45,11 +53,11 @@ var rand1 = Math.floor(Math.random() * 2) + 1;
 //console.log('trial 1 rand:'+ rand1);
 var key_e1, key_i1;
 if (rand1 ==1) {
-    key_e1 = 'European Americans';
-    key_i1 = 'African Americans';
+    key_e1 = identities[0];
+    key_i1 = identities[1];
 } else {
-    key_e1 = 'African Americans';
-    key_i1 = 'European Americans';
+    key_e1 = identities[1];
+    key_i1 = identities[0];
 }
 
 //changed timeline variables so they are not hard coded
@@ -89,15 +97,15 @@ function createTimelineVariables(leftstimuli, rightstimuli, trialnum){
 
 
 var timeline_variables1;
-if (key_e1 =='European Americans') {
-    var leftstimuli = images.slice(0,images.length/2)
-    var rightstimuli = images.slice(images.length/2, images.length)
+if (key_e1 ==identities[0]) {
+    var leftstimuli = images1
+    var rightstimuli = images2
     timeline_variables1 = createTimelineVariables(leftstimuli, rightstimuli, 1)
 
 }
 else {
-    var leftstimuli = images.slice(images.length/2, images.length)
-    var rightstimuli = images.slice(0,images.length/2)
+    var leftstimuli = images2
+    var rightstimuli = images1
     timeline_variables1 = createTimelineVariables(leftstimuli, rightstimuli, 1)
 }
 
@@ -147,24 +155,24 @@ var rand2 = Math.floor(Math.random() * 2) + 1;
 //console.log('trial 2 rand:'+ rand2);
 var key_e2, key_i2;
 if (rand2 ==1) {
-    key_e2 = 'GOOD';
-    key_i2 = 'BAD';
+    key_e2 = labels[0];
+    key_i2 = labels[1];
 } else {
-    key_e2 = 'BAD';
-    key_i2 = 'GOOD';
+    key_e2 = labels[1];
+    key_i2 = labels[0];
 }
 
 var timeline_variables2;
-if (key_e2 =='GOOD') {
+if (key_e2 ==labels[0]) {
 
-    var leftstimuli = traits.slice(0,traits.length/2)
-    var rightstimuli = traits.slice(traits.length/2, traits.length)
+    var leftstimuli = traits1
+    var rightstimuli = traits2
     timeline_variables2 = createTimelineVariables(leftstimuli, rightstimuli,2)
 
 }
 else {
-    var leftstimuli = traits.slice(traits.length/2, traits.length)
-    var rightstimuli = traits.slice(0,traits.length/2)
+    var leftstimuli = traits2
+    var rightstimuli = traits1
     timeline_variables2 = createTimelineVariables(leftstimuli, rightstimuli,2)
 
 }
@@ -218,51 +226,51 @@ var timeline_variables34;
 
 
 // if WG is for key E
-if (key_e34 == 'European Americans or GOOD') {
-    var leftstimuli1 = images.slice(0,images.length/2)
-    var leftstimuli2 = traits.slice(0,traits.length/2)
+if (key_e34 == identities[0] +" or "+ labels[0]) {
+    var leftstimuli1 = images1
+    var leftstimuli2 = traits1
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
-    var rightstimuli1 = images.slice(images.length/2, images.length)
-    var rightstimuli2 = traits.slice(traits.length/2, traits.length)
+    var rightstimuli1 = images2
+    var rightstimuli2 = traits2
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
     timeline_variables34 = createTimelineVariables(leftstimuli, rightstimuli,3)
 
 }
 
 // if WG is for key I
-if (key_i34 == 'European Americans or GOOD') {
+if (key_i34 == identities[0] +" or "+ labels[0]) {
 
-    var rightstimuli1 = images.slice(0,images.length/2)
-    var rightstimuli2 = traits.slice(0,traits.length/2)
+    var rightstimuli1 = images1
+    var rightstimuli2 = traits1
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
-    var leftstimuli1 = images.slice(images.length/2, images.length)
-    var leftstimuli2 = traits.slice(traits.length/2, traits.length)
+    var leftstimuli1 = images2
+    var leftstimuli2 = traits2
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
     timeline_variables34 = createTimelineVariables(leftstimuli, rightstimuli,3)
 
 }
 
 // if BG is for key E
-if (key_e34 == 'African Americans or GOOD') {
+if (key_e34 == identities[1] +" or "+ labels[0]) {
 
-    var leftstimuli1 = images.slice(images.length/2, images.length)
-    var leftstimuli2 = traits.slice(0, traits.length/2)
+    var leftstimuli1 = images2
+    var leftstimuli2 = traits1
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
-    var rightstimuli1 = images.slice(0, images.length/2)
-    var rightstimuli2 = traits.slice(traits.length/2, traits.length)
+    var rightstimuli1 = images1
+    var rightstimuli2 = traits2
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
     timeline_variables34 = createTimelineVariables(leftstimuli, rightstimuli,3)
 
 }
 
 // if BG for key I
-if (key_i34 == 'African Americans or GOOD') {
+if (key_i34 == identities[1] +" or "+ labels[0]) {
 
-    var rightstimuli1 = images.slice(images.length/2, images.length)
-    var rightstimuli2 = traits.slice(0, traits.length/2)
+    var rightstimuli1 = images2
+    var rightstimuli2 = traits1
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
-    var leftstimuli1 = images.slice(0, images.length/2)
-    var leftstimuli2 = traits.slice(traits.length/2, traits.length)
+    var leftstimuli1 = images1
+    var leftstimuli2 = traits2
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
     timeline_variables34 = createTimelineVariables(leftstimuli, rightstimuli,3)
 
@@ -354,39 +362,39 @@ var trial_block4 = {
 
 var key_e5, key_i5;
 // if this, then use the other!
-if (key_e34 == 'European Americans or GOOD') {
-    key_e5 = 'African American';
-    key_i5 = 'European American';
+if (key_e34 == identities[0] +" or "+ labels[0]) {
+    key_e5 = identities[1];
+    key_i5 = identities[0];
 }
 
-if (key_e34 == 'European Americans or BAD') {
-    key_e5 = 'African American';
-    key_i5 = 'European American';
+if (key_e34 == identities[0] +" or "+ labels[1]) {
+    key_e5 = identities[1];
+    key_i5 = identities[0];
 }
 
-if (key_e34 == 'African Americans or GOOD') {
-    key_e5 = 'European American';
-    key_i5 = 'African American';
+if (key_e34 == identities[1] +" or "+ labels[0]) {
+    key_e5 = identities[0];
+    key_i5 = identities[1];
 }
 
-if (key_e34 == 'African Americans or BAD') {
-    key_e5 = 'European American';
-    key_i5 = 'African American';
+if (key_e34 == identities[1] +" or "+ labels[1]) {
+    key_e5 = identities[0];
+    key_i5 = identities[1];
 }
 
 // make timeline variables
 var timeline_variables5;
-if (key_e5 == 'European American') {
+if (key_e5 == identities[0]) {
 
-    var leftstimuli = images.slice(0,images.length/2)
-    var rightstimuli = images.slice(images.length/2, images.length)
+    var leftstimuli = images1
+    var rightstimuli = images2
     timeline_variables5 = createTimelineVariables(leftstimuli, rightstimuli, 5)
 
 }
 else {
 
-    var leftstimuli = images.slice(images.length/2, images.length)
-    var rightstimuli = images.slice(0,images.length/2)
+    var leftstimuli = images2
+    var rightstimuli = images1
     timeline_variables1 = createTimelineVariables(leftstimuli, rightstimuli, 5)
 
 }
@@ -430,24 +438,24 @@ var trial_block5 = {
 // -------------------------- TRIAL 6 --------------------------
 var key_e67, key_i67;
 
-if (key_e34 == 'European Americans or GOOD') {
-    key_e67 = 'African Americans or GOOD';
-    key_i67 = 'European Americans or BAD';
+if (key_e34 == identities[0] +" or "+ labels[0]) {
+    key_e67 = identities[1] +" or "+ labels[0];
+    key_i67 = identities[0] +" or "+ labels[1];
 }
 
-if (key_e34 == 'European Americans or BAD') {
-    key_e67 = 'African Americans or BAD';
-    key_i67 = 'European Americans or GOOD';
+if (key_e34 == identities[0] +" or "+ labels[1]) {
+    key_e67 = identities[1] +" or "+ labels[1];
+    key_i67 = identities[0] +" or "+ labels[0];
 }
 
-if (key_e34 == 'African Americans or GOOD') {
-    key_e67 = 'European Americans or GOOD';
-    key_i67 = 'African Americans or BAD';
+if (key_e34 == identities[1] +" or "+ labels[0]) {
+    key_e67 = identities[0] +" or "+ labels[0];
+    key_i67 = identities[1] +" or "+ labels[1];
 }
 
-if (key_e34 == 'African Americans or BAD') {
-    key_e67 = 'European Americans or BAD';
-    key_i67 = 'African Americans or GOOD';
+if (key_e34 == identities[1] +" or "+ labels[1]) {
+    key_e67 = identities[0] +" or "+ labels[1];
+    key_i67 = identities[1] +" or "+ labels[0];
 }
 
 // console.log('key_e67: '+key_e67);
@@ -456,49 +464,50 @@ if (key_e34 == 'African Americans or BAD') {
 var timeline_variables67;
 
 // if WG is for key E
-if (key_e67 == 'European Americans or GOOD') {
-    var leftstimuli1 = images.slice(0,images.length/2)
-    var leftstimuli2 = traits.slice(0,traits.length/2)
+if (key_e67 == identities[0] +" or "+ labels[0]) {
+    var leftstimuli1 = images1
+    var leftstimuli2 = traits1
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
-    var rightstimuli1 = images.slice(images.length/2, images.length)
-    var rightstimuli2 = traits.slice(traits.length/2, traits.length)
+    var rightstimuli1 = images2
+    var rightstimuli2 = traits2
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
-    timeline_variables67 = createTimelineVariables(leftstimuli, rightstimuli, 6)
+    timeline_variables67 = createTimelineVariables(leftstimuli, rightstimuli,6)
+
 
 }
 
 // if WG is for key I
-if (key_i67 == 'European Americans or GOOD') {
-    var rightstimuli1 = images.slice(0,images.length/2)
-    var rightstimuli2 = traits.slice(0,traits.length/2)
+if (key_i67 == identities[0] +" or "+ labels[0]) {
+    var rightstimuli1 = images1
+    var rightstimuli2 = traits1
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
-    var leftstimuli1 = images.slice(images.length/2, images.length)
-    var leftstimuli2 = traits.slice(traits.length/2, traits.length)
+    var leftstimuli1 = images2
+    var leftstimuli2 = traits2
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
     timeline_variables67 = createTimelineVariables(leftstimuli, rightstimuli, 6)
 
 }
 
 // if BG is for key E
-if (key_e67 == 'African Americans or GOOD') {
-    var leftstimuli1 = images.slice(images.length/2, images.length)
-    var leftstimuli2 = traits.slice(0, traits.length/2)
+if (key_e67 == identities[1] +" or "+ labels[0]) {
+    var leftstimuli1 = images2
+    var leftstimuli2 = traits1
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
-    var rightstimuli1 = images.slice(0, images.length/2)
-    var rightstimuli2 = traits.slice(traits.length/2, traits.length)
+    var rightstimuli1 = images1
+    var rightstimuli2 = traits2
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
     timeline_variables67 = createTimelineVariables(leftstimuli, rightstimuli,6)
 }
 
 // if BG for key I
-if (key_i67 == 'African Americans or GOOD') {
-    var rightstimuli1 = images.slice(images.length / 2, images.length)
-    var rightstimuli2 = traits.slice(0, traits.length / 2)
+if (key_i67 == identities[1] +" or "+ labels[0]) {
+    var rightstimuli1 = images2
+    var rightstimuli2 = traits1
     var rightstimuli = rightstimuli1.concat(rightstimuli2)
-    var leftstimuli1 = images.slice(0, images.length / 2)
-    var leftstimuli2 = traits.slice(traits.length / 2, traits.length)
+    var leftstimuli1 = images1
+    var leftstimuli2 = traits2
     var leftstimuli = leftstimuli1.concat(leftstimuli2)
-    timeline_variables67 = createTimelineVariables(leftstimuli, rightstimuli, 6)
+    timeline_variables67 = createTimelineVariables(leftstimuli, rightstimuli,6)
 }
 
 
