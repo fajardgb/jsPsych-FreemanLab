@@ -1,3 +1,6 @@
+//Debug mode
+var debug = false;
+
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
 var jsPsych = initJsPsych({
@@ -10,14 +13,16 @@ var jsPsych = initJsPsych({
     },
 });
 var timeline = [];
-jsPsych.data.addProperties({subject_id: sub_id});
+jsPsych.data.addProperties({ subject_id: sub_id });
 
 //Import config file
 import config from "./config.js"
 
 //Adds consent form to timeline
 import { pushConsentForm } from '../consent.js';
-pushConsentForm(jsPsych, timeline, config.experimentName);
+if (!debug) {
+    pushConsentForm(jsPsych, timeline, config.experimentName);
+}
 
 //EXPERIMENT CONTENT GOES HERE
 var preload = {
@@ -39,7 +44,7 @@ var instructions = {
 
 var showVideo = {
     type: jsPsychVideoSliderContinuousResponse,
-    data: {trial_name: 'video'},
+    data: { trial_name: 'video' },
     stimulus: jsPsych.timelineVariable("stimulus"),
     height: config.videoHeight,
     width: config.videoWidth,
@@ -57,20 +62,38 @@ var showVideo = {
     response_ends_trial: true
 };
 
-var trial = {
-    timeline: [showVideo],
-    timeline_variables: test_stimuli,
-    randomize_order: config.randomize,
-    //Repeatedly give one video, don't give the list
-    //Make it possible to put stuff between videos
+var sampleTask = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: "Sample task",
+    choices: ['Continue']
 };
+
+
+var trial = {
+    timeline: [],
+};
+
+for (var i = 0; i < test_stimuli.length; i++) {
+    trial.timeline.push({
+        timeline: [showVideo],
+        timeline_variables: [test_stimuli[i]],
+        randomize_order: config.randomize,
+    });
+
+    // Insert additional trial after each video trial, except for the last one
+    if (i < test_stimuli.length - 1) {
+        trial.timeline.push(sampleTask);
+    }
+}
 
 timeline.push(preload, instructions, trial);
 //END OF EXPERIMENT CONTENT
 
 //Adds demographics survey to timeline
 import { pushDemographicSurvey } from '../demographics.js'
-pushDemographicSurvey(timeline);
+if (!debug) {
+    pushDemographicSurvey(timeline);
+}
 
 //Run
 jsPsych.run(timeline);

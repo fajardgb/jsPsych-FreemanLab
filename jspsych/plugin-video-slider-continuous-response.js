@@ -1,4 +1,5 @@
 var responseArray = [];
+var startTime;
 
 var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
     'use strict';
@@ -206,6 +207,9 @@ var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
                 html += "auto;";
             }
             html += '">';
+            responseArray = []; //Reset response array
+            startTime = performance.now(); //Reset start time
+            registerResponse(trial.slider_start); //Register starting response
             html +=
                 '<input type="range" class="jspsych-slider" value="' +
                 trial.slider_start +
@@ -327,7 +331,6 @@ var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
                     .querySelector("#jspsych-video-slider-continuous-response-response")
                     .addEventListener("change", enable_button);
             }
-            var startTime = performance.now();
             // store response
             var response = {
                 rt: null,
@@ -438,6 +441,6 @@ var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
 })(jsPsychModule);
 
 function registerResponse(val) {
-    var currentTime = performance.now();
+    var currentTime = performance.now() - startTime;
     responseArray.push({ value: val, time: currentTime });
 };
