@@ -1,5 +1,5 @@
 //Debug mode
-var debug = false;
+var debug = true;
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
@@ -33,7 +33,7 @@ var preload = {
 };
 
 var test_stimuli = config.videoList.map(function (item) {
-    return { stimulus: ["videos/" + item] };
+    return { stimulus: ["videos/" + item], start: Math.floor(Math.random() * (config.maxSlider - config.minSlider + 1)) + config.minSlider };
 });
 
 var instructions = {
@@ -52,7 +52,7 @@ var showVideo = {
     labels: config.sliderLabels,
     min: config.minSlider,
     max: config.maxSlider,
-    slider_start: config.startSlider,
+    slider_start: jsPsych.timelineVariable("start"),
     autoplay: config.autoplay,
     controls: false,
     rate: config.rate,

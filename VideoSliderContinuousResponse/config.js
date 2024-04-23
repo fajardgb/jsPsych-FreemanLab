@@ -34,9 +34,6 @@ const config = {
 
     //Maximum value of the slider
     maxSlider: 100,
-
-    //Starting/default value of the slider
-    startSlider: 50,
 }
 
 export default config;
