@@ -14,20 +14,8 @@ const config = {
     //Should the video autoplay? (true = autoplay, false = need to press play)
     autoplay: true,
 
-    //Should the video have controls (pause, move playback, etc) (true = controls, false = no controls)
-    controls: false,
-
     //What rate should the video play (ex: 1.5 = 1.5x speed)
     rate: 1,
-
-    //Should responses be allowed while the video is playing? (true = respond any time, false = only respond at end)
-    midResponse: true,
-
-    //Should the participant have to move the slider before clicking continue? (true = must move, false = don't need to move)
-    needMovement: false,
-
-    //Should the trial automatically end when the video ends? (true = auto end, false = need to press continue)
-    autoEnd: true,
 
     //Video height in pixels (null = use original height)
     videoHeight: null,
@@ -39,16 +27,16 @@ const config = {
     randomize: true,
 
     //Labels displayed at equidistant locations along the slider
-    sliderLabels: ['1', '2', '3', '4', '5', '6', '7'],
+    sliderLabels: ['0', '50', '100'],
 
     //Minimum value of the slider
-    minSlider: 1,
+    minSlider: 0,
 
     //Maximum value of the slider
-    maxSlider: 7,
+    maxSlider: 100,
 
     //Starting/default value of the slider
-    startSlider: 4,
+    startSlider: 50,
 }
 
 export default config;

@@ -54,11 +54,11 @@ var showVideo = {
     max: config.maxSlider,
     slider_start: config.startSlider,
     autoplay: config.autoplay,
-    controls: config.controls,
+    controls: false,
     rate: config.rate,
-    response_allowed_while_playing: config.midResponse,
-    require_movement: config.needMovement,
-    trial_ends_after_video: config.autoEnd,
+    response_allowed_while_playing: true,
+    require_movement: false,
+    trial_ends_after_video: true,
     response_ends_trial: true
 };
 

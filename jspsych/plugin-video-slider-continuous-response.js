@@ -250,17 +250,17 @@ var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
             if (trial.prompt !== null) {
                 html += "<div>" + trial.prompt + "</div>";
             }
-            // add submit button
-            var next_disabled_attribute = "";
-            if (trial.require_movement || !trial.response_allowed_while_playing) {
-                next_disabled_attribute = "disabled";
-            }
-            html +=
-                '<button id="jspsych-video-slider-continuous-response-next" class="jspsych-btn" ' +
-                next_disabled_attribute +
-                ">" +
-                trial.button_label +
-                "</button>";
+            // // add submit button
+            // var next_disabled_attribute = "";
+            // if (trial.require_movement || !trial.response_allowed_while_playing) {
+            //     next_disabled_attribute = "disabled";
+            // }
+            // html +=
+            //     '<button id="jspsych-video-slider-continuous-response-next" class="jspsych-btn" ' +
+            //     next_disabled_attribute +
+            //     ">" +
+            //     trial.button_label +
+            //     "</button>";
             display_element.innerHTML = html;
             var video_element = display_element.querySelector("#jspsych-video-slider-continuous-response-stimulus-video");
             if (video_preload_blob) {
