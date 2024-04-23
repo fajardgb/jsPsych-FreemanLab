@@ -250,7 +250,7 @@ var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
             if (trial.prompt !== null) {
                 html += "<div>" + trial.prompt + "</div>";
             }
-            // // add submit button
+            // add submit button
             // var next_disabled_attribute = "";
             // if (trial.require_movement || !trial.response_allowed_while_playing) {
             //     next_disabled_attribute = "disabled";
@@ -359,20 +359,20 @@ var jsPsychVideoSliderContinuousResponse = (function (jspsych) {
                 // move on to the next trial
                 this.jsPsych.finishTrial(trial_data);
             };
-            display_element
-                .querySelector("#jspsych-video-slider-continuous-response-next")
-                .addEventListener("click", () => {
-                    // measure response time
-                    var endTime = performance.now();
-                    response.rt = Math.round(endTime - startTime);
-                    response.response = display_element.querySelector("#jspsych-video-slider-continuous-response-response").valueAsNumber;
-                    if (trial.response_ends_trial) {
-                        end_trial();
-                    }
-                    else {
-                        display_element.querySelector("#jspsych-video-slider-continuous-response-next").disabled = true;
-                    }
-                });
+            // display_element
+            //     .querySelector("#jspsych-video-slider-continuous-response-next")
+            //     .addEventListener("click", () => {
+            //         // measure response time
+            //         var endTime = performance.now();
+            //         response.rt = Math.round(endTime - startTime);
+            //         response.response = display_element.querySelector("#jspsych-video-slider-continuous-response-response").valueAsNumber;
+            //         if (trial.response_ends_trial) {
+            //             end_trial();
+            //         }
+            //         else {
+            //             display_element.querySelector("#jspsych-video-slider-continuous-response-next").disabled = true;
+            //         }
+            //     });
             // function to enable slider after video ends
             function enable_slider() {
                 document.querySelector("#jspsych-video-slider-continuous-response-response").disabled = false;
