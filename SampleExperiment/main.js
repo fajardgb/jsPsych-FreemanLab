@@ -9,6 +9,7 @@ var jsPsych = initJsPsych({
         jsPsych.data.get().localSave("csv", "sub-" + sub_id + "_data.csv");
     },
 });
+// for info on how to save on the server, please contact me: gjf2118@columbia.edu
 var timeline = [];
 
 //Import config file
