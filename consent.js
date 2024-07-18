@@ -1,7 +1,8 @@
 var jsPsych;
 
 var welcome = {
-    type: jsPsychHtmlKeyboardResponse,
+    // type: jsPsychHtmlKeyboardResponse,
+    type: jsPsychHtmlButtonResponse,
 };
 
 // screener questions
@@ -56,7 +57,8 @@ var questions = {
 //function to add tasks to timeline
 export function pushConsentForm(jsPsychInstance, timeline, name) {
     welcome.stimulus = "Welcome to " + name + ". Press any key to continue.";
-    // add your consent form here!
+    // ADD your consent form here!
+    welcome.choices = 'Consent'
     timeline.push(welcome, questions);
     jsPsych = jsPsychInstance;
 };
