@@ -126,8 +126,11 @@ Watch a video, rate it after it is over
 ## Videos: Rate halfway through 
 Watch a video, be able to pause/rate it halfway thorugh.
 
-## Videos: Rate continously  
+## Videos: Rate continously with a slider
 Completed!
+
+## Videos: Rate continously with a button presses
+Left and right keys (or 's' and 'k' keys) move the slider/rating left-right
 
 ## Videos: FreeResponse (halfway through at end also)
 Watch a video, and make it be able to input a word halfway through the video
