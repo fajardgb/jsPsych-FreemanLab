@@ -55,6 +55,7 @@ var questions = {
 //function to add tasks to timeline
 export function pushConsentForm(jsPsychInstance, timeline, name) {
     welcome.stimulus = "Welcome to " + name + ". Press any key to continue.";
+    // add your consent form here!
     timeline.push(welcome, questions);
     jsPsych = jsPsychInstance;
 };
