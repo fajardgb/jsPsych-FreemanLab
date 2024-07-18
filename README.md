@@ -9,7 +9,7 @@ When writing these scripts, please make sure they are **well-commented and easil
 - **Example 2**: when rating images, make it loop through a list/array of images/image_names - don’t make it so you have to call an image every time. 
 - **Example 3**: When you say “this experiment takes {XXX} minutes to complete” in the instructions page, make sure that XXX is a variable in config.
 
-As with any good psychology experiment, **randomization** is a must. Make sure there is an easy way to randomize your experiments, whether that be through jsPsych or creating a function that randomizes an array of image names. 
+As with any good psychology experiment, **randomization** is usually a must. Make sure there is an easy way to randomize your experiments, whether that be through jsPsych or creating a function that randomizes an array of image names. 
 
 There are many great ready-to-go scripts and examples available [online](https://github.com/jspsych/jsPsych/tree/main/examples). Feel free to use them - there is no need to start everything from scratch! 
 
@@ -18,7 +18,7 @@ There are many great ready-to-go scripts and examples available [online](https:/
 3. Indicate on **Slack which project you are working** on! We don’t want 2 people working on the same thing, and there is lots to choose from!
 4. To start a script, clone this repo, then **make a copy of the SampleExperiment folder**. See the [template](#template) section below for more details.
 4. Name each trial with an intuitive name (for data saving later)
-   1. E.g: don't call a rating trial simply 'Task1'.
+   1. i.e: don't call a rating trial simply 'Task1'.
 5. If you are working on a script that requires images/word_vectors, you can use your own images/words lists, and loop over them for the experiments. 
 6. Additional scripts to clean/analyze the data would be great but not necessary at the moment
 7. Push the folder to the github repo!
