@@ -56,7 +56,7 @@ var questions = {
 
 //function to add tasks to timeline
 export function pushConsentForm(jsPsychInstance, timeline, name) {
-    welcome.stimulus = "Welcome to " + name + ". Press any key to continue.";
+    welcome.stimulus = "Welcome to " + name + ". Press the 'Consent' button to continue.";
     // ADD your consent form here!
     welcome.choices = 'Consent'
     timeline.push(welcome, questions);
