@@ -4,6 +4,7 @@ var welcome = {
     type: jsPsychHtmlKeyboardResponse,
 };
 
+// screener questions
 var questions = {
     type: jsPsychSurvey,
     data: {trial_name: 'consent'},
