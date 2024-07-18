@@ -74,21 +74,11 @@ Easy surveys - would be a good start. If interested in working on them let me kn
 ![MRS](imgs/MRS.png)
 
 ## Survey: Consent Page
-See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js)!
-
-Completed!
+Completed! See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js)!
 
 ## Rating Images: single trait at a time
 
-~~Implement a script that shows an image, and asks to rate it on a specific trait with~~
-~~1. scale (button response)~~
-~~2. slider~~
-
-Customizability:
-~~1. be able to easily change traits/words (dimensions you are rating images on)~~
-~~2. loop over an array of image names for a single trait~~
-~~3. loop over an array of traits/words for a single image~~
-~~4. be able to change scale easily (eg: from 1-7 to 1-9)~~
+Completed!
 
 ## Rating Images: two traits at a time
 
@@ -101,46 +91,48 @@ Same as above, but with N traits!
 ## FreeResponse Images/Words: one at a time
 This one is already done, but could add more comments/customizability. 
 
-See the [code](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/GF_antonyms)!
+See the [code](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/TraitAntonyms)!
 
 ## FreeResponse Rate PairwiseSimilarity
 
-May need this for IAC model project! 
-
 See this [paper](https://www.pnas.org/doi/full/10.1073/pnas.1807222115?doi=10.1073/pnas.1807222115) for a description of the task. 
 
-I implemented this already, see this [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/GF_pairwise_sim). This might already work, but needs to be fleshed out more. 
+I implemented this already, see this [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/TraitPairwiseSim). This might already work, but needs to be fleshed out more. 
 
-Needed: 
-~~1. Need each target trait to be compared with each other trait.~~ 
+## Ordinal Rating: two choices
+
+Which one of these two images is more Trustworthy? 
+
+## Ordinal Rating: N choices
+
+Which one of these (N) images is more Trustworthy? 
 
 ## Passive Viewing of Images (or 1-back)
 Passively view images. Each image is shown for 2s, ISI of 2-6s (randomly sampled to start with). 
 
 Needed: 
-1. Add probe condition, for 1-back task, so some images are repeated twice in a row. If an image is repeated, the participant should press a button. 
+1. Add probe condition, for 1-back task, so some images are repeated twice in a row. If an image is repeated, the participant should press a button.
+2. Add fMRI trigger/waiting for scanner page
 
 ## Mousetracking
 Implement any mousetracking script!
 
 ## Implicit Association Test (IAT)
-I made this one for a post-scan task, but it is embarassingly hard coded. See the [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/IAT). 
-
-Needed: 
-~~1. make things not hard-coded and more customizable~~
-
-
+I made this one for a post-scan task, but it still needs some work/customizability. See the [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/IAT). 
 
 ## Videos: Rate at end
 Watch a video, rate it after it is over
 
-## Videos: Rate halfway throug
+## Videos: Rate halfway through 
 Watch a video, be able to pause/rate it halfway thorugh.
+
+## Videos: Rate continously  
+Completed!
 
 ## Videos: FreeResponse (halfway through at end also)
 Watch a video, and make it be able to input a word halfway through the video
 
-Make it be pausable? 
+Make it be pausable? Or stop at certain timepoints, and ask for a response. 
 
 ## Trust Game
 
@@ -166,10 +158,16 @@ Retrieval:
 - Show sentence, 2-4s ISI, 6s grid
 - Make a red box around the grid - they can move it around left to right to make decision about WHO-SAID-WHAT
 
-
-
-
 ![WSW](imgs/WSW.png)
+
+## To-Do:
+- Make 3 different types of studies:
+   - Online
+   - Local (fMRI; just would need wait for scanner/trigger, timepoints of each stim)
+   - Local (debugging, saving locally)
+
+- For the sub_id at each filename, have an option where for online studies, it uses the Prolific ID instead.
+- Add instructions on how to save online / server. 
 
 
 
