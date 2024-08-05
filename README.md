@@ -90,6 +90,9 @@ Same as above, but with N traits!
 
 ## FreeResponse Images/Words: one at a time
 This one is already done, but could add more comments/customizability. 
+- Trait array - defined in the config? 
+- If we are rating words, we shouldn’t need to use jpegs - only text / HTML
+    - Use a table or something 
 
 See the [code](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/TraitAntonyms)!
 
