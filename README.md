@@ -23,6 +23,8 @@ There are many great ready-to-go scripts and examples available [online](https:/
 6. Additional scripts to clean/analyze the data would be great but not necessary at the moment
 7. Push the folder to the github repo!
 
+***Note: in order to run/debug your task, please select "Other" for the political party question, as it is an attention check.***
+
 # Template
 [SampleExperiment](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/SampleExperiment) serves as a template experiment that does the following:
 - Shows the consent form at the beginning (imported from [consent.js](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js))
