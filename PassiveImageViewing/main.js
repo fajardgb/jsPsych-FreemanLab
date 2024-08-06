@@ -1,6 +1,6 @@
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
-var jsPsych = initJsPsych({
+export var jsPsych = initJsPsych({
     show_progress_bar: true,
     on_finish: function () {
         jsPsych.endExperiment(`<p>You've finished the last task. Thanks for participating!</p>
@@ -28,8 +28,8 @@ var instructions = {
 
 var waiting_for_scanner = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: 'Waiting for scanner. Press 5 to continue',
-    choices: "5"
+    stimulus: config.scannerPageInstructions,
+    choices: config.waitingForScannerKey
 };
 
 //Preload images so loading them doesn't cause delays during the actual task
@@ -51,18 +51,16 @@ var test_stimuli = config.imageList.map(function (item) {
 var blank = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: '',
-    choices: "NO_KEYS",
-    trial_duration: function(){
-        return jsPsych.randomization.randomInt(2000, 6000);
-    },
+    choices: config.blankKey,
+    trial_duration: config.blankDuration
 };
 
 //Image display
 var image = {
     type: jsPsychImageKeyboardResponse,
     stimulus: jsPsych.timelineVariable('stimulus'),
-    choices: "ALL_KEYS",
-    trial_duration: 2000,
+    choices: config.imageKey,
+    trial_duration: config.imageDuration,
     response_ends_trial: false
 };
 
