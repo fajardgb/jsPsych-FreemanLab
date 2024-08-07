@@ -12,7 +12,17 @@ const config = {
     //List of images used (should be in images folder)
     imageList: ['test1.png','test2.png'],
 
+    //List of text strings corresponding to each image
     textList: ['Test 1', 'Test 2'],
+
+    //HTML tag to use for text display
+    textTag: "h1",
+
+    //CSS for image display
+    imageCSS: "",
+
+    //CSS for text display
+    textCSS: "font-size: 40px",
 
     //Number of probe tasks where image is shown twice in a row
     numProbeTasks: 1,

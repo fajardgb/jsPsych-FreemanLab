@@ -45,7 +45,7 @@ timeline.push(preload, instructions, waiting_for_scanner);
 //Return array of image stimuli based on imageList provided in config
 var i = 0;
 var test_stimuli = config.imageList.map(function (item) {
-    let stim = { stimulus: `<img src="images/${item}"><br><h1>${config.textList[i]}</h1>` };
+    let stim = { stimulus: `<img src="images/${item}" style="${config.imageCSS}"><br><${config.textTag} style="${config.textCSS}">${config.textList[i]}</${config.textTag}>` };
     i++;
     return stim;
     
