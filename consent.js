@@ -58,7 +58,7 @@ var questions = {
 export function pushConsentForm(jsPsychInstance, timeline, name) {
     welcome.stimulus = "Welcome to " + name + ". Press the 'Consent' button to continue.";
     // ADD your consent form here!
-    welcome.choices = 'Consent'
+    welcome.choices = ['Consent']
     timeline.push(welcome, questions);
     jsPsych = jsPsychInstance;
 };
