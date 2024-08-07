@@ -64,7 +64,6 @@ var image = {
     response_ends_trial: false
 };
 
-console.log(test_stimuli);
 //Combined test with sampling without replacement 
 var test = {
     timeline: [blank, image],
@@ -73,7 +72,6 @@ var test = {
         type: 'custom',
         fn: function(t){
             let order = jsPsych.randomization.shuffle(t);
-            console.log(order);
             //Add random duplicates for probe tasks
             for (let i=0; i<config.numProbeTasks; i++){
                 let probe = jsPsych.randomization.randomInt(0, t.length-1);
@@ -83,7 +81,6 @@ var test = {
                     probeImg,
                     ...order.slice(probe)
                 ];
-                console.log(order);
             }
             return order;
         },
