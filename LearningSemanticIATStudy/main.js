@@ -123,7 +123,7 @@ var semanticPreload = {
     images:congruent, incongruent
 };
 
-//EXPERIMENT CONTENT GOES HERE
+
 var semanticInstructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: config.semanticInstructions,

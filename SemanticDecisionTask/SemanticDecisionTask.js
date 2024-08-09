@@ -58,18 +58,6 @@ var instructions = {
 timeline.push(instructions);
 timeline.push(preload)
 
-// randomize which key for which category
-var rand = Math.floor(Math.random() * 2) + 1;
-
-var key_e, key_i;
-if (rand ==1) {
-    key_e = labels[0];
-    key_i = labels[1];
-} else {
-    key_e = labels[1];
-    key_i = labels[0];
-}
-
 //create trait pairs of congruent faces with traits, incongruent faces with traits
 function createTaskPairs(congruent, incongruent, traits1, traits2){
     var pairs = [];
@@ -99,15 +87,46 @@ function createImageSimTask(image){
 
 }
 
+function createFixationCross(){
+    let fixation = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<div style="font-size:60px;">+</div>',
+        choices: "NO_KEYS",
+        trial_duration: 500,
+    };
+    return fixation;
+}
+
+function createBlank(){
+    let blank = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '',
+        choices: "NO_KEYS",
+        trial_duration: 100,
+    };
+    return blank;
+}
+
 function createTraitSimTask(trait){
 
     var simTask = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: "<font size='24'><strong>" + trait + "</strong></font>",
+        stimulus: function(){
+            // randomize which key for which category
+            var rand = Math.floor(Math.random() * 2) + 1;
+
+            var key_e, key_i;
+            if (rand ==1) {
+                key_e = labels[0];
+                key_i = labels[1];
+            } else {
+                key_e = labels[1];
+                key_i = labels[0];
+            }
+            return `<div style='margin-bottom: 300px'><p style='margin-right: 150px; display: inline-block'>${config.left_category_key} = ${key_e}</p><p style='margin-left: 150px; display: inline-block'>${config.right_category_key} = ${key_i}</p></div>`
+        },
         choices: [config.left_category_key, config.right_category_key],
-        prompt: "<br>Is " + trait + " " + labels[0] + " or " + labels[1] + " ?",
-
-
+        prompt: "<font size='24'><strong>" + trait + "</strong></font>",
     };
     return [simTask];
 
@@ -123,7 +142,10 @@ for(var i = 0; i <traitPairs.length; i = i+1)
         var [ImageSimTask] = createImageSimTask(traitPairs[i][0]);
         var [TraitSimTask] = createTraitSimTask(traitPairs[i][1]);
         timeline.push(ImageSimTask);
+        timeline.push(createFixationCross());
+        timeline.push(createBlank());
         timeline.push(TraitSimTask);
+        console.log(timeline)
 }
 
 
