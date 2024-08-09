@@ -395,7 +395,7 @@ else {
 
     var leftstimuli = images2
     var rightstimuli = images1
-    timeline_variables1 = createTimelineVariables(leftstimuli, rightstimuli, 5)
+    timeline_variables5 = createTimelineVariables(leftstimuli, rightstimuli, 5)
 
 }
 
