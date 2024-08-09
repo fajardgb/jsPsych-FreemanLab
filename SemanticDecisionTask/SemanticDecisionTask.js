@@ -200,8 +200,8 @@ for(var i = 0; i <traitPairs.length; i = i+1)
         console.log(traitPairs[i][0], traitPairs[i][1])
         var [ImageSimTask] = createImageSimTask(traitPairs[i][0]);
         var [TraitSimTask] = createTraitSimTask(traitPairs[i][1]);
-        timeline.push(ImageSimTask);
         timeline.push(createFixationCross());
+        timeline.push(ImageSimTask);
         timeline.push(createBlank());
         timeline.push(TraitSimTask);
         timeline.push(createTooSlow());
