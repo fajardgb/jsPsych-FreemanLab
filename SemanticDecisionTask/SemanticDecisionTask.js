@@ -127,10 +127,69 @@ function createTraitSimTask(trait){
         },
         choices: [config.left_category_key, config.right_category_key],
         prompt: "<font size='24'><strong>" + trait + "</strong></font>",
+        on_finish: function(data){
+            // Determine whether to show feedback page.
+            if(data.rt < 200){
+                data.tooFast = true;
+                data.tooSlow = false; 
+            } else if (data.rt > 3000) {
+                data.tooFast = false;
+                data.tooSlow = true; 
+            } else {
+                data.tooFast = false;
+                data.tooSlow = false; 
+            }
+            
+        }
     };
     return [simTask];
 
 }
+
+function createTooSlow(){
+    var feedback = {
+        type: jsPsychHtmlKeyboardResponse,
+        trial_duration: 2000,
+        choices: "NO_KEYS",
+        stimulus: "<h1>Please make your decision more quickly.</h1>"
+    };
+    
+    var feedbackNode = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var playingFeedback = jsPsych.data.get().last(1).values()[0].tooSlow;
+            if(playingFeedback){
+              return true;
+            } else {
+              return false;
+            }
+        }
+    }
+    return feedbackNode;
+}
+
+function createTooFast(){
+    var feedback = {
+        type: jsPsychHtmlKeyboardResponse,
+        trial_duration: 2000,
+        choices: "NO_KEYS",
+        stimulus: "<h1>Please spend more time making a decision.</h1>"
+    };
+    
+    var feedbackNode = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var playingFeedback = jsPsych.data.get().last(1).values()[0].tooFast;
+            if(playingFeedback){
+              return true;
+            } else {
+              return false;
+            }
+        }
+    }
+    return feedbackNode;
+}
+
 var traitPairs = createTaskPairs(congruent, incongruent, traits1, traits2)
 traitPairs = shuffleArray(traitPairs)
 
@@ -145,7 +204,8 @@ for(var i = 0; i <traitPairs.length; i = i+1)
         timeline.push(createFixationCross());
         timeline.push(createBlank());
         timeline.push(TraitSimTask);
-        console.log(timeline)
+        timeline.push(createTooSlow());
+        timeline.push(createTooFast());
 }
 
 

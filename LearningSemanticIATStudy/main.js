@@ -68,29 +68,29 @@ var image = {
     }
 };
 
-var feedback = {
+
+var learningFeedback = {
     type: jsPsychHtmlKeyboardResponse,
-    trial_duration: function(){
-        var last_trial_correct = jsPsych.data.get().last(1).values()[0].feedback;
-        if(last_trial_correct){
-          return 2000;
-        } else {
-          return 0;
-        }
-    },
-    stimulus: function(){
-        var last_trial_correct = jsPsych.data.get().last(1).values()[0].feedback;
-        if(last_trial_correct){
-          return "<h1>Please spend more time on each image.</h1>";
-        } else {
-          return "";
-        }
-    },
+    trial_duration: 2000,
+    stimulus: "<h1>Please spend more time on each image.</h1>",
+    choices: "NO_KEYS",
 };
+
+var learningFeedbackNode = {
+    timeline: [learningFeedback],
+    conditional_function: function(){
+        var playingFeedback = jsPsych.data.get().last(1).values()[0].feedback;
+        if(playingFeedback){
+          return true;
+        } else {
+          return false;
+        }
+    }
+}
 
 //Combined learning task
 var learningTask = {
-    timeline: [image,feedback],
+    timeline: [image,learningFeedbackNode],
     timeline_variables: learningTaskStimuli,
     sample: {
         type: 'without-replacement',
@@ -213,10 +213,69 @@ function createTraitSimTask(trait){
         },
         choices: [config.left_category_key, config.right_category_key],
         prompt: "<font size='24'><strong>" + trait + "</strong></font>",
+        on_finish: function(data){
+            // Determine whether to show feedback page.
+            if(data.rt < 200){
+                data.tooFast = true;
+                data.tooSlow = false; 
+            } else if (data.rt > 3000) {
+                data.tooFast = false;
+                data.tooSlow = true; 
+            } else {
+                data.tooFast = false;
+                data.tooSlow = false; 
+            }
+            
+        }
     };
     return [simTask];
 
 }
+
+function createTooSlow(){
+    var feedback = {
+        type: jsPsychHtmlKeyboardResponse,
+        trial_duration: 2000,
+        choices: "NO_KEYS",
+        stimulus: "<h1>Please make your decision more quickly.</h1>"
+    };
+    
+    var feedbackNode = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var playingFeedback = jsPsych.data.get().last(1).values()[0].tooSlow;
+            if(playingFeedback){
+              return true;
+            } else {
+              return false;
+            }
+        }
+    }
+    return feedbackNode;
+}
+
+function createTooFast(){
+    var feedback = {
+        type: jsPsychHtmlKeyboardResponse,
+        trial_duration: 2000,
+        choices: "NO_KEYS",
+        stimulus: "<h1>Please spend more time making a decision.</h1>"
+    };
+    
+    var feedbackNode = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var playingFeedback = jsPsych.data.get().last(1).values()[0].tooFast;
+            if(playingFeedback){
+              return true;
+            } else {
+              return false;
+            }
+        }
+    }
+    return feedbackNode;
+}
+
 var traitPairs = createTaskPairs(congruent, incongruent, traits1, traits2)
 traitPairs = shuffleArray(traitPairs)
 
@@ -231,11 +290,49 @@ for(var i = 0; i <traitPairs.length; i = i+1)
         timeline.push(createFixationCross());
         timeline.push(createBlank());
         timeline.push(TraitSimTask);
+        timeline.push(createTooSlow());
+        timeline.push(createTooFast());
 }
 
 //SEMANTIC TASK END
 
 //PHYSIOGNOMIC SCALE START
+var physioOptions = ["1 (strongly disagree)",
+    "2",
+    "3",
+    "4 (neither disagree or agree)",
+    "5",
+    "6",
+    "7 (strongly agree)",];
+
+var PhysiognomicBeliefScale = {
+type: jsPsychSurveyMultiChoice,
+data: {trial_name: 'physiognomic_belief'},
+questions: [
+{
+prompt: "I can learn something about a person\'s personality just from looking at his or her face",
+name: "PBS_1",
+options: physioOptions,
+required: true,
+// horizontal: true,
+},
+{
+prompt: "I do not believe that the person\'s personality is reflected in their face",
+name: "PBS_2",
+options: physioOptions,
+required: true,
+// horizontal: true,
+},
+{
+prompt: "My first impression of the person\'s personality, \n just from looking at his or her face, is accurate",
+name: "PBS_3",
+options: physioOptions,
+required: true,
+// horizontal: true,
+},
+],
+};
+timeline.push(PhysiognomicBeliefScale);
 
 //PHYSIOGNOMIC SCALE END
 
