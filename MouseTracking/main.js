@@ -57,7 +57,7 @@ var mouseTrack = {
     choices: ["BLACK,WHITE"],
     button_html: `<div style="position:absolute; top: 10vw; left: 50vw; transform: translate(-50%, -50%);" ><button id="button-left" class="jspsych-btn" style='margin-right: 50vw;'>BLACK</button><button id="button-right" class="jspsych-btn" style='margin-left: 50vw; transform: translate(0, -100%);'>WHITE</button></div>`,
     extensions: [
-        {type: jsPsychExtensionMouseTracking, params: {targets: ['#button-left','#button-right']}}
+        {type: jsPsychExtensionMouseTracking, params: {targets: ['img, #button-left','#button-right']}}
     ],
 };
 
