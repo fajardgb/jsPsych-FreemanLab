@@ -4,9 +4,12 @@ const config = {
     //The name of the experiment, which will show in the welcome message
     experimentName: "Your Study Name Here",
 
+
+    //Learning task config section
     //The instructions to be shown before the experiment begins
     learningInstructions: "You will be shown a series of images paired with a text description. Press next once you have viewed each image for a time.",
 
+    //List of all images used in learning task, for preloading
     imageList: ['trustworthy1.png','untrustworthy1.png'],
 
     //List of trustworthy images used (should be in images folder)
