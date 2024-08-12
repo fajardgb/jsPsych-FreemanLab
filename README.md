@@ -113,11 +113,7 @@ Which one of these two images is more Trustworthy?
 Which one of these (N) images is more Trustworthy? 
 
 ## Passive Viewing of Images (or 1-back)
-Passively view images. Each image is shown for 2s, ISI of 2-6s (randomly sampled to start with). 
-
-Needed: 
-1. Add probe condition, for 1-back task, so some images are repeated twice in a row. If an image is repeated, the participant should press a button.
-2. Add fMRI trigger/waiting for scanner page
+Complete!
 
 ## Mousetracking
 Implement any mousetracking script!
