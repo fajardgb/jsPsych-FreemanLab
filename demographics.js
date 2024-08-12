@@ -6,10 +6,9 @@ var taskAge = {
     questions: [{ prompt: "What is your age?", name: "age" }],
 };
 
-//race demo question
-var TaskDemoRace = {
+//demo questions
+var taskDemo = {
     type: jsPsychSurveyMultiChoice,
-    data: {trial_name: 'demographics'},
     questions: [
         {
             prompt: "With which race/ethnicity do you most identify?",
@@ -24,13 +23,6 @@ var TaskDemoRace = {
             ],
             required: true,
         },
-    ],
-};
-
-//demo questions
-var taskDemo = {
-    type: jsPsychSurveyMultiChoice,
-    questions: [
         {
             prompt: "Do you consider yourself to be Hispanic or Latino?",
             name: "hispanic",
@@ -86,5 +78,5 @@ var taskDemo = {
 
 //function to add tasks to timeline
 export function pushDemographicSurvey(timeline) {
-    timeline.push(taskAge, TaskDemoRace, taskDemo);
+    timeline.push(taskAge, taskDemo);
 }
