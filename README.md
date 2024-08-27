@@ -6,7 +6,7 @@ Our lab’s current way of running online experiments is very outdated (Jon hire
 When writing these scripts, please make sure they are **well-commented and easily customizable** (ideally via a config file). **Try not to hard code any parameters/settings** - make sure things are easily changeable. Here are some concrete examples of what I mean: 
 
 - **Example 1**: when setting the image height/wide, make this changeable in the config file. 
-- **Example 2**: when rating images, make it loop through a list/array of images/image_names - don’t make it so you have to call an image every time. 
+- **Example 2**: when rating images, make it loop through a list/array of images/image_names - don’t make it so you have to call an image every time. And define this list in the config file. 
 - **Example 3**: When you say “this experiment takes {XXX} minutes to complete” in the instructions page, make sure that XXX is a variable in config.
 
 As with any good psychology experiment, **randomization** is usually a must. Make sure there is an easy way to randomize your experiments, whether that be through jsPsych or creating a function that randomizes an array of image names. 
