@@ -169,10 +169,13 @@ Retrieval:
    - Online
    - Local (fMRI; just would need wait for scanner/trigger, timepoints of each stim)
    - Local (debugging, saving locally)
+- Add instructions on how to save online / server vs locally - maybe have a variable in config to have online=true/false.
 
-- For the sub_id at each filename, have an option where for online studies, it uses the Prolific ID instead.
-- Add instructions on how to save online / server. 
 
+- For the sub_id at each filename, have an option where for online studies, it uses the **Prolific ID** instead.
+- Add clearer instructions on how to weed out attention checks vs. save data (look at SK_TrainGen1) script
+- Make sure we have functionality to save each task separately...
+- Make sure we have functionality to save as the experiment goes along. Check out this [link](https://www.jspsych.org/v7/reference/jspsych/#jspsychendexperiment) and the ``on_data_update`` parameter. 
 
 
 
