@@ -174,8 +174,8 @@ Retrieval:
 
 - For the sub_id at each filename, have an option where for online studies, it uses the **Prolific ID** instead.
 - Add clearer instructions on how to weed out attention checks vs. save data (look at SK_TrainGen1) script
-- Make sure we have functionality to save each task separately...
-- Make sure we have functionality to save as the experiment goes along. Check out this [link](https://www.jspsych.org/v7/reference/jspsych/#jspsychendexperiment) and the ``on_data_update`` parameter.
+- Add functionality to save each task separately...
+- Add functionality to save as the experiment goes along. Check out this [link](https://www.jspsych.org/v7/reference/jspsych/#jspsychendexperiment) and the ``on_data_update`` parameter.
 - Add attention checks to all tasks (press N, click X, etc...)
 
 
