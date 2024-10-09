@@ -110,7 +110,7 @@ Which one of these two images is more Trustworthy?
 
 ## Ordinal Rating: N choices
 
-Which one of these (N) images is more Trustworthy? 
+Which one of these (N) images is more Trustworthy? Make a way to rank from 1-N as well!
 
 ## Passive Viewing of Images (or 1-back)
 Complete!
