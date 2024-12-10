@@ -71,7 +71,7 @@ See [template](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demograp
 Completed!
 
 ## Survey: MRS, SPS, NFCS, RES, FT
-Easy surveys - would be a good start. If interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. 
+Easy surveys - would be a good start. If interested in working on them let me know and I'll show you what the questions for them are! We have them implemented on Qualtrics, but not everyone has access to Qualtrics. We might also want to combined behaviora/social-cog paradigms with a survey questionnaire, a task that is better implemented on jsPsych. 
 
 ![MRS](imgs/MRS.png)
 
