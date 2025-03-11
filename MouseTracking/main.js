@@ -50,7 +50,7 @@ var stimuli = config.imageList.map(function (item) {
 var prepare = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>BLACK</button> <button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>WHITE</button>`,
-    choices: ["NEXT"],
+    choices: ["START"],
     button_html: `<button class="jspsych-btn" style='position:absolute; top: 90%; left: 50%; transform: translate(-50%, -50%);'>%choice%</button>`,
 };
 
@@ -63,12 +63,59 @@ var mouseTrack = {
         `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>%choice%</button>`
     ],
     extensions: [
-        {type: jsPsychExtensionMouseTracking, params: {targets: ['img, #button-left','#button-right']}}
+        {type: jsPsychExtensionMouseTracking}
     ],
+    on_finish: function(data){
+        console.log("RT: " + data.rt)
+    }
 };
 
+function checkTooFast(){
+    var feedback = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `Please spend more time making a decision.`,
+        choices: ["Continue"]
+    };
+    
+    var feedbackNode = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var rt = jsPsych.data.get().last(1).values()[0].rt;
+            // console.log("Checking if " + rt + " is too fast")
+            if(rt < config.minRT){
+              return true;
+            } else {
+              return false;
+            }
+        }
+    }
+    return feedbackNode;
+}
+
+function checkTooSlow(){
+    var feedback = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `Please make your decision more quickly.`,
+        choices: ["Continue"]
+    };
+    
+    var feedbackNode = {
+        timeline: [feedback],
+        conditional_function: function(){
+            var rt = jsPsych.data.get().last(1).values()[0].rt;
+            // console.log("Checking if " + rt + " is too slow")
+            if(rt > config.maxRT){
+              return true;
+            } else {
+              return false;
+            }
+        }
+    }
+    return feedbackNode;
+}
+
 var fullTrial = {
-    timeline: [prepare, mouseTrack],
+    timeline: [prepare, mouseTrack, checkTooFast(), checkTooSlow()],
     timeline_variables: stimuli,
     sample: {
         type: 'without-replacement',
