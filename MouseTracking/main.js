@@ -1,5 +1,5 @@
 //Debug mode
-var debug = false;
+var debug = true;
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
@@ -28,6 +28,12 @@ if (!debug) {
 }
 
 //EXPERIMENT CONTENT GOES HERE
+
+var fullscreen = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true
+}
+
 var instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: config.instructions,
@@ -41,7 +47,7 @@ var preload = {
     })
 };
 
-timeline.push(instructions, preload)
+timeline.push(fullscreen, instructions, preload)
 
 var stimuli = config.imageList.map(function (item) {
     return { stimulus: [`<img src='images/${item}' style='position:absolute; top: 90%; left: 50%; transform: translate(-50%, -50%);'>`] };
