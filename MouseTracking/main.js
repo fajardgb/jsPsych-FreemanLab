@@ -1,5 +1,5 @@
 //Debug mode
-var debug = true;
+var debug = false;
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
@@ -29,19 +29,23 @@ if (!debug) {
 
 //EXPERIMENT CONTENT GOES HERE
 
+//Randomizes button order if specified in config
 var buttonOrder = config.randomizeButtons ? jsPsych.randomization.shuffle(config.buttons) : config.buttons;
 
+//Prompts user to enter fullscreen mode
 var fullscreen = {
     type: jsPsychFullscreen,
     fullscreen_mode: true
 }
 
+//Displays instructions
 var instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: config.instructions,
     choices: ['Continue']
 };
 
+//Preloads images
 var preload = {
     type: jsPsychPreload,
     images: config.imageList.map(function (item) {
@@ -51,10 +55,12 @@ var preload = {
 
 timeline.push(fullscreen, instructions, preload)
 
+//Adds styling (position and sizes) to images
 var stimuli = config.imageList.map(function (item) {
     return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: ${config.imgWidth}px; height: ${config.imgHeight}px'>`] };
 });
 
+//Displays start button and choice buttons (for between images)
 var prepare = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>${buttonOrder[0]}</button> <button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>${buttonOrder[1]}</button>`,
@@ -62,11 +68,12 @@ var prepare = {
     button_html: `<button class="jspsych-btn" style='position:absolute; top: 90%; left: 50%; transform: translate(-50%, -50%);'>%choice%</button>`,
 };
 
+//Key trial that displays image and tracks mouse and response
 var mouseTrack = {
     type: jsPsychHtmlButtonResponse,
     stimulus: jsPsych.timelineVariable('stimulus'),
     choices: buttonOrder,
-    button_html: [
+    button_html: [ //HTML styling for each button
         `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>%choice%</button>`,
         `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>%choice%</button>`
     ],
@@ -74,6 +81,7 @@ var mouseTrack = {
         {type: jsPsychExtensionMouseTracking}
     ],
     on_finish: function(data){
+        //Adds too_fast or too_slow data
         console.log("RT: " + data.rt)
         data.too_fast = false;
         data.too_slow = false;
@@ -87,6 +95,7 @@ var mouseTrack = {
     data: {trial_name: 'mouseTrackQuestion', button_order: buttonOrder}
 };
 
+//Checks if response was too fast and notifies user if needed
 function checkTooFast(){
     var feedback = {
         type: jsPsychHtmlButtonResponse,
@@ -109,6 +118,7 @@ function checkTooFast(){
     return feedbackNode;
 }
 
+//Checks if response was too slow and notifies user if needed
 function checkTooSlow(){
     var feedback = {
         type: jsPsychHtmlButtonResponse,
@@ -131,15 +141,17 @@ function checkTooSlow(){
     return feedbackNode;
 }
 
+//Creates timeline
 var fullTrial = {
     timeline: [prepare, mouseTrack, checkTooFast(), checkTooSlow()],
     timeline_variables: stimuli,
     sample: {
         type: 'without-replacement',
-        size: 3
+        size: 12
     }
 }
 timeline.push(fullTrial);
+
 //END OF EXPERIMENT CONTENT
 
 //Adds demographics survey to timeline
