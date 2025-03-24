@@ -29,6 +29,8 @@ if (!debug) {
 
 //EXPERIMENT CONTENT GOES HERE
 
+var buttonOrder = config.randomizeButtons ? jsPsych.randomization.shuffle(config.buttons) : config.buttons;
+
 var fullscreen = {
     type: jsPsychFullscreen,
     fullscreen_mode: true
@@ -50,16 +52,12 @@ var preload = {
 timeline.push(fullscreen, instructions, preload)
 
 var stimuli = config.imageList.map(function (item) {
-    if (config.imgWidth == 0 || config.imgHeight == 0) {
-        return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%);'>`] };
-    } else {
-        return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: ${config.imgWidth}px; height: ${config.imgHeight}px'>`] };
-    }
+    return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: ${config.imgWidth}px; height: ${config.imgHeight}px'>`] };
 });
 
 var prepare = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>BLACK</button> <button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>WHITE</button>`,
+    stimulus: `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>${buttonOrder[0]}</button> <button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>${buttonOrder[1]}</button>`,
     choices: ["START"],
     button_html: `<button class="jspsych-btn" style='position:absolute; top: 90%; left: 50%; transform: translate(-50%, -50%);'>%choice%</button>`,
 };
@@ -67,7 +65,7 @@ var prepare = {
 var mouseTrack = {
     type: jsPsychHtmlButtonResponse,
     stimulus: jsPsych.timelineVariable('stimulus'),
-    choices: ["BLACK", "WHITE"],
+    choices: buttonOrder,
     button_html: [
         `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>%choice%</button>`,
         `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>%choice%</button>`
@@ -77,16 +75,16 @@ var mouseTrack = {
     ],
     on_finish: function(data){
         console.log("RT: " + data.rt)
-        data.tooFast = false;
-        data.tooSlow = false;
+        data.too_fast = false;
+        data.too_slow = false;
         if (data.rt < config.minRT){
-            data.tooFast = true;
+            data.too_fast = true;
         } else if (data.rt > config.maxRT) {
-            data.tooFast = false;
-            data.tooSlow = true; 
+            data.too_fast = false;
+            data.too_slow = true; 
         }
     },
-    data: {trialName: 'mouseTrackQuestion'}
+    data: {trial_name: 'mouseTrackQuestion', button_order: buttonOrder}
 };
 
 function checkTooFast(){
