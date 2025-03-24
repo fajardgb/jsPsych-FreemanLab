@@ -50,7 +50,11 @@ var preload = {
 timeline.push(fullscreen, instructions, preload)
 
 var stimuli = config.imageList.map(function (item) {
-    return { stimulus: [`<img src='images/${item}' style='position:absolute; top: 90%; left: 50%; transform: translate(-50%, -50%);'>`] };
+    if (config.imgWidth == 0 || config.imgHeight == 0) {
+        return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%);'>`] };
+    } else {
+        return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: ${config.imgWidth}px; height: ${config.imgHeight}px'>`] };
+    }
 });
 
 var prepare = {

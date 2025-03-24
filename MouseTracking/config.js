@@ -8,6 +8,10 @@ const config = {
     //List of stimuli images
     imageList: ['black/b1.png','black/b2.png','black/b3.png','black/b4.png','black/b5.png','black/b6.png','white/w1.png','white/w2.png','white/w3.png','white/w4.png','white/w5.png','white/w6.png'],
 
+    //Stimuli image size (leave as 0 to use image's original size)
+    imgWidth: 0,
+    imgHeight: 0,
+
     //Minimum response time
     minRT: 200,
 
