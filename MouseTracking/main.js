@@ -73,7 +73,16 @@ var mouseTrack = {
     ],
     on_finish: function(data){
         console.log("RT: " + data.rt)
-    }
+        data.tooFast = false;
+        data.tooSlow = false;
+        if (data.rt < config.minRT){
+            data.tooFast = true;
+        } else if (data.rt > config.maxRT) {
+            data.tooFast = false;
+            data.tooSlow = true; 
+        }
+    },
+    data: {trialName: 'mouseTrackQuestion'}
 };
 
 function checkTooFast(){
@@ -125,7 +134,7 @@ var fullTrial = {
     timeline_variables: stimuli,
     sample: {
         type: 'without-replacement',
-        size: 12
+        size: 3
     }
 }
 timeline.push(fullTrial);
