@@ -38,6 +38,12 @@ var fullscreen = {
     fullscreen_mode: true
 }
 
+//Checks for width and height of browser
+var sizeCheck = {
+    type: jsPsychBrowserCheck,
+    features: ["width", "height"]
+}
+
 //Displays instructions
 var instructions = {
     type: jsPsychHtmlButtonResponse,
@@ -53,7 +59,7 @@ var preload = {
     })
 };
 
-timeline.push(fullscreen, instructions, preload)
+timeline.push(fullscreen, sizeCheck, instructions, preload)
 
 //Adds styling (position and sizes) to images
 var stimuli = config.imageList.map(function (item) {
