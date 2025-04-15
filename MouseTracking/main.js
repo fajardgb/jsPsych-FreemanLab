@@ -63,15 +63,15 @@ timeline.push(fullscreen, sizeCheck, instructions, preload)
 
 //Adds styling (position and sizes) to images
 var stimuli = config.imageList.map(function (item) {
-    return { stimulus: [`<img src='images/${item}' style='position:absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: ${config.imgWidth}px; height: ${config.imgHeight}px'>`] };
+    return { stimulus: [`<div id="mousetracking-container" style="border:2px solid transparent; border-color: #ccc; position: absolute; width: ${config.boxWidth}px; height: ${config.boxHeight}px; transform: translate(-50%, -50%); top: 50%; left: 50%;"></div><img src='images/${item}' style='position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-top: ${config.imageTopMargin}px; width: ${config.imgWidth}px; height: ${config.imgHeight}px'>`] };
 });
 
 //Displays start button and choice buttons (for between images)
 var prepare = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>${buttonOrder[0]}</button> <button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>${buttonOrder[1]}</button>`,
+    stimulus: `<div id="mousetracking-container" style="border:2px solid transparent; border-color: #ccc; position: absolute; width: ${config.boxWidth}px; height: ${config.boxHeight}px; transform: translate(-50%, -50%); top: 50%; left: 50%;"></div><button class="jspsych-btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-left: -${config.buttonSideMargin}px; margin-top: ${config.buttonTopMargin}px; width: ${config.buttonWidth}px; height: ${config.buttonHeight}px; font-size: ${config.buttonTextSize}px;"'>${buttonOrder[0]}</button><button class="jspsych-btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-left: ${config.buttonSideMargin}px; margin-top: ${config.buttonTopMargin}px; width: ${config.buttonWidth}px; height: ${config.buttonHeight}px; font-size: ${config.buttonTextSize}px;"'>${buttonOrder[1]}</button>`,
     choices: ["START"],
-    button_html: `<button class="jspsych-btn" style='position:absolute; top: 90%; left: 50%; transform: translate(-50%, -50%);'>%choice%</button>`,
+    button_html: `<button class="jspsych-btn" style='position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-top: ${config.imageTopMargin}px;'>%choice%</button>`,
 };
 
 //Key trial that displays image and tracks mouse and response
@@ -80,8 +80,8 @@ var mouseTrack = {
     stimulus: jsPsych.timelineVariable('stimulus'),
     choices: buttonOrder,
     button_html: [ //HTML styling for each button
-        `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 25vw; transform: translate(-50%, -50%);'>%choice%</button>`,
-        `<button class="jspsych-btn" style='position: absolute; top: 10vw; left: 75vw; transform: translate(-50%, -50%);'>%choice%</button>`
+        `<button class="jspsych-btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-left: -${config.buttonSideMargin}px; margin-top: ${config.buttonTopMargin}px; width: ${config.buttonWidth}px; height: ${config.buttonHeight}px; font-size: ${config.buttonTextSize}px;"'>%choice%</button>`,
+        `<button class="jspsych-btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-left: ${config.buttonSideMargin}px; margin-top: ${config.buttonTopMargin}px; width: ${config.buttonWidth}px; height: ${config.buttonHeight}px; font-size: ${config.buttonTextSize}px;"'>%choice%</button>`
     ],
     extensions: [
         {type: jsPsychExtensionMouseTracking}

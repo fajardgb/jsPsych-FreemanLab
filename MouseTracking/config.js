@@ -18,6 +18,20 @@ const config = {
     imgWidth: null,
     imgHeight: null,
 
+    //Bounding box size
+    boxWidth: 800,
+    boxHeight: 600,
+
+    //Button and image positioning (pixels from center)
+    buttonSideMargin: 200,
+    buttonTopMargin: -200,
+    imageTopMargin: 200,
+
+    //Button and text size
+    buttonWidth: 120,
+    buttonHeight: 60,
+    buttonTextSize: 20,
+
     //Minimum response time
     minRT: 200,
 
