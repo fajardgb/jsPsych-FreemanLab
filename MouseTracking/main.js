@@ -84,7 +84,7 @@ var mouseTrack = {
         `<button class="jspsych-btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin-left: ${config.buttonSideMargin}px; margin-top: ${config.buttonTopMargin}px; width: ${config.buttonWidth}px; height: ${config.buttonHeight}px; font-size: ${config.buttonTextSize}px;"'>%choice%</button>`
     ],
     extensions: [
-        {type: jsPsychExtensionMouseTracking}
+        {type: jsPsychExtensionMouseTracking, params: {targets: ["#mousetracking-container"]}}
     ],
     on_finish: function(data){
         //Adds too_fast or too_slow data

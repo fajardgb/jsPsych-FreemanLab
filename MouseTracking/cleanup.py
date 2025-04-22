@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import json
 
-file_name = "MouseTracking/output/sub-119570_data.csv"
+file_name = "MouseTracking/output/sub-986043_data.csv"
 
 df = pd.read_csv(file_name)
 df = df[df['trial_name'] == 'mouseTrackQuestion']
@@ -14,6 +14,7 @@ num = 1
 for mouse_data in df['mouse_tracking_data']:
     # Convert data
     mouse_data_df = pd.DataFrame(json.loads(mouse_data))
+    print(mouse_data_df)
 
     # Plot
     plt.figure()
@@ -24,4 +25,4 @@ for mouse_data in df['mouse_tracking_data']:
     plt.gca().set_aspect('equal', adjustable='box') # Ensure x-axis and y-axis are proportional
     plt.grid(True)
     plt.savefig(f"MouseTracking/output/mouse_tracking_{num}.png", bbox_inches='tight')
-    num += 1;
+    num += 1

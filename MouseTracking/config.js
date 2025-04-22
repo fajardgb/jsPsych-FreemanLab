@@ -19,11 +19,11 @@ const config = {
     imgHeight: null,
 
     //Bounding box size
-    boxWidth: 800,
+    boxWidth: 1000,
     boxHeight: 600,
 
     //Button and image positioning (pixels from center)
-    buttonSideMargin: 200,
+    buttonSideMargin: 400,
     buttonTopMargin: -200,
     imageTopMargin: 200,
 
