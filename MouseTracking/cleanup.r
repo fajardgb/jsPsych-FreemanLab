@@ -3,13 +3,12 @@ library(tidyr)
 library(jsonlite)
 library(stringr)
 
-file_path <- "MouseTracking/output/sample_data.csv"
-
-data <- read.csv(file_path)
-
 mouse_track_questions <- data %>%
   # Filter for mouseTrackQuestion rows
   filter(grepl("mouseTrackQuestion", trial_name)) %>%
+
+  # Adds mt_id column (trial identifier)
+  mutate(mt_id = row_number()) %>%
 
   # Filter out trials that were too fast or too slow
   mutate(
@@ -43,7 +42,6 @@ mouse_track_questions <- data %>%
 
 # Flatten mouse tracking JSON into one table with trial identifiers
 long_data <- mouse_track_questions %>%
-  mutate(mt_id = row_number()) %>% # Adds mt_id column (trial identifier)
   rowwise() %>%
   mutate(parsed = list(fromJSON(mouse_tracking_data))) %>% # Parse json
   unnest(parsed) %>% # Explodes each event into separate row
@@ -57,4 +55,5 @@ long_data <- mouse_track_questions %>%
   )
 
 # Save as csv
-write.csv(long_data, "MouseTracking/output/long_data.csv", row.names = FALSE)
+print(paste("Saved cleaned CSV at", clean_file_path))
+write.csv(long_data, clean_file_path, row.names = FALSE)
