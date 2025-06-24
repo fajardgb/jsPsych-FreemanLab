@@ -1,5 +1,5 @@
 //Debug mode
-var debug = false;
+var debug = true;
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
@@ -42,13 +42,8 @@ var mobileCheck = {
   type: jsPsychBrowserCheck,
   features: ["mobile"],
   inclusion_function: (data) => {
+    console.log("Mobile: ", data.mobile)
     return data.mobile == false
-  },
-  exclusion_message: (data) => {
-    if(data.mobile){
-        jsPsych.endExperiment();
-        return;
-    }
   }
 };
 
@@ -64,7 +59,11 @@ var fullscreen = {
 //Checks for width and height of browser
 var sizeCheck = {
     type: jsPsychBrowserCheck,
-    features: ["width", "height"]
+    features: ["width", "height"],
+    inclusion_function: (data) => {
+        console.log("Screen Size: ", data.width, "x", data.height)
+        return data.width > config.boxWidth && data.height > config.boxHeight
+    }
 }
 
 //Displays instructions
