@@ -3,13 +3,21 @@ var debug = false;
 
 //Initialize
 var sub_id = Math.random().toString().substr(2, 6); // generate random 6 digit number
+var completed = false
 var jsPsych = initJsPsych({
     show_progress_bar: true,
     on_finish: function () {
-        jsPsych.endExperiment(`<p>You've finished the last task. Thanks for participating!</p>
-    <p><a href="https://app.prolific.co/submissions/complete?cc=XXXXXX">Click here to return to Prolific and complete the study</a>.</p>`);
-        console.log("End of experiment");
-        jsPsych.data.get().localSave("csv", "sub-" + sub_id + "_data.csv");
+        if(completed) {
+            // Message for successful completion of study
+            jsPsych.endExperiment(`<p>Thanks for participating!</p>
+                <p><a href="https://app.prolific.co/submissions/complete?cc=XXXXXX">Click here to return to Prolific and complete the study</a>.</p>`);
+            console.log("End of experiment");
+            jsPsych.data.get().localSave("csv", "sub-" + sub_id + "_data.csv");
+        } else {
+            // Message for early termination of study
+            jsPsych.endExperiment(`<p>You are not eligible for the study, please return.</p>`);
+            console.log("Experiment terminated early")
+        }
     },
     extensions: [
         {type: jsPsychExtensionMouseTracking}
@@ -24,10 +32,25 @@ import config from "./config.js"
 //Adds consent form to timeline
 import { pushConsentForm } from '../consent.js';
 if (!debug) {
-    pushConsentForm(jsPsych, timeline, config.experimentName);
+    pushConsentForm(jsPsych, timeline, config.experimentName)
 }
 
 //EXPERIMENT CONTENT GOES HERE
+
+//Terminate experiment if user is on mobile
+var mobileCheck = {
+  type: jsPsychBrowserCheck,
+  features: ["mobile"],
+  inclusion_function: (data) => {
+    return data.mobile == false
+  },
+  exclusion_message: (data) => {
+    if(data.mobile){
+        jsPsych.endExperiment();
+        return;
+    }
+  }
+};
 
 //Randomizes button order if specified in config
 var buttonOrder = config.randomizeButtons ? jsPsych.randomization.shuffle(config.buttons) : config.buttons;
@@ -59,7 +82,15 @@ var preload = {
     })
 };
 
-timeline.push(fullscreen, sizeCheck, instructions, preload)
+timeline.push(mobileCheck, fullscreen, sizeCheck, instructions, preload)
+
+// //Terminates the experiment if the user exits fullscreen mode
+// document.addEventListener('fullscreenchange', function() {
+//   if (!document.fullscreenElement) {
+//     alert("Please do not exit fullscreen mode. The experiment has been terminated");
+//     jsPsych.endExperiment("You exited fullscreen mode. The experiment has been terminated.");
+//   }
+// });
 
 //Adds styling (position and sizes) to images
 var stimuli = config.imageList.map(function (item) {
@@ -153,7 +184,7 @@ var fullTrial = {
     timeline_variables: stimuli,
     sample: {
         type: 'without-replacement',
-        size: 12
+        size: 3
     }
 }
 timeline.push(fullTrial);
@@ -165,6 +196,17 @@ import { pushDemographicSurvey } from '../demographics.js'
 if (!debug) {
     pushDemographicSurvey(timeline);
 }
+
+//Adds final trial to mark successful completion
+var completion = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `You've finished the last task. Click the button to end the study.`,
+    choices: ["End"],
+    on_finish: function () {
+        completed = true
+    }
+}
+timeline.push(completion)
 
 //Run
 jsPsych.run(timeline);

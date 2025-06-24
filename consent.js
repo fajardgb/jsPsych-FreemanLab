@@ -43,10 +43,7 @@ var questions = {
     button_label_finish: 'Continue',
     on_finish: function(data) {
         //Ends experiment early if failed english or attention check
-        //NOTE: This still leads to the regular end screen and saves data. Do we want this? 
-        if(data.response.Eng == "No") {
-            jsPsych.endExperiment();
-        } else if(data.response.attention_check != "Other") {
+        if(data.response.Eng == "No" || data.response.attention_check != "Other") {
             jsPsych.endExperiment();
         }
     }
