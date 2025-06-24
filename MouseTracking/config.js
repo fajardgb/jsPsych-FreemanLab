@@ -5,7 +5,10 @@ const config = {
     //The instructions to be shown before the experiment begins
     instructions: "You will be shown ???. Please ???.",
 
-    //The text for the two buttons
+    //Category names - These must be the exact names of the folders containing stimuli images for each category.
+    categories: ["black", "white"],
+
+    //The text for the two buttons. The order must match the categories order
     buttons: ["BLACK", "WHITE"],
 
     //Should the button order be randomized? (true = randomized)

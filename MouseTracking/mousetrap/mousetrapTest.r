@@ -1,7 +1,7 @@
 library(mousetrap)
 library(ggplot2)
 
-file_path <- "MouseTracking/output/crazy_data.csv"
+file_path <- "MouseTracking/output/sample_data.csv"
 clean_dir <- "MouseTracking/mousetrap/output"
 file_name <- tools::file_path_sans_ext(basename(file_path))
 clean_file_path <- file.path(clean_dir, paste0(file_name, "_clean.csv"))

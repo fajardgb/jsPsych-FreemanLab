@@ -20,15 +20,20 @@ mouse_track_questions <- data %>%
   filter(!(too_fast|too_slow)) %>%
 
   # Add correct response column
+  rowwise() %>%
   mutate(
-    correct_response = ifelse(grepl("images/black", stimulus), "BLACK", "WHITE")
+    correct_response = {
+      match <- fromJSON(categories)[str_detect(stimulus, fixed(fromJSON(categories)))]
+      match[1]
+    }
   ) %>%
+  ungroup() %>%
 
   # Add correct column
   rowwise() %>%
   mutate(
     correct = as.integer(
-      (fromJSON(button_order)[response + 1]) == correct_response
+      (fromJSON(categories)[response + 1]) == correct_response
     )
   ) %>%
   ungroup() %>%
@@ -40,7 +45,7 @@ mouse_track_questions <- data %>%
   ) %>%
 
   # Add stimulus column
-  mutate(stimulus_id = str_match(stimulus, "images/(?:black|white)/([a-zA-Z0-9]+)\\.png")[,2])
+  mutate(stimulus_id = str_match(stimulus, "/([a-zA-Z0-9]+)\\.png")[,2])
 
 
 # Flatten mouse tracking JSON into one table with trial identifiers

@@ -48,15 +48,23 @@ var mobileCheck = {
 };
 
 //Randomizes button order if specified in config
-var buttonOrder = config.randomizeButtons ? jsPsych.randomization.shuffle(config.buttons) : config.buttons;
+var buttonOrder = config.buttons
+var categories = config.categories
+if (config.randomizeButtons) {
+    var indices = [...Array(buttonOrder.length).keys()];
+    indices = jsPsych.randomization.shuffle(indices);
+    buttonOrder = indices.map(i => buttonOrder[i]),
+    categories = indices.map(i => categories[i])
+}
 
 //Prompts user to enter fullscreen mode
 var fullscreen = {
     type: jsPsychFullscreen,
-    fullscreen_mode: true
+    fullscreen_mode: true,
+    message: `<p>The experiment will switch to full screen mode when you press the button below.</p><p>Please do not exit full screen mode until you have completed the study.</p>`
 }
 
-//Checks for width and height of browser
+//Checks for width and height of browser, terminates experiment if too small
 var sizeCheck = {
     type: jsPsychBrowserCheck,
     features: ["width", "height"],
@@ -83,13 +91,11 @@ var preload = {
 
 timeline.push(mobileCheck, fullscreen, sizeCheck, instructions, preload)
 
-// //Terminates the experiment if the user exits fullscreen mode
-// document.addEventListener('fullscreenchange', function() {
-//   if (!document.fullscreenElement) {
-//     alert("Please do not exit fullscreen mode. The experiment has been terminated");
-//     jsPsych.endExperiment("You exited fullscreen mode. The experiment has been terminated.");
-//   }
-// });
+//Terminates the experiment if the user exits fullscreen mode
+document.addEventListener('fullscreenchange', function() {
+    alert("Please do not exit fullscreen mode. This study will be terminated.");
+    jsPsych.endExperiment()
+});
 
 //Adds styling (position and sizes) to images
 var stimuli = config.imageList.map(function (item) {
@@ -128,7 +134,7 @@ var mouseTrack = {
             data.too_slow = true; 
         }
     },
-    data: {trial_name: 'mouseTrackQuestion', button_order: buttonOrder}
+    data: {trial_name: 'mouseTrackQuestion', button_order: buttonOrder, categories: categories}
 };
 
 //Checks if response was too fast and notifies user if needed
