@@ -3,6 +3,8 @@ library(tidyr)
 library(jsonlite)
 library(stringr)
 
+data <- read.csv(file_path)
+
 mouse_track_questions <- data %>%
   # Filter for mouseTrackQuestion rows
   filter(grepl("mouseTrackQuestion", trial_name)) %>%
@@ -39,6 +41,7 @@ mouse_track_questions <- data %>%
 
   # Add stimulus column
   mutate(stimulus_id = str_match(stimulus, "images/(?:black|white)/([a-zA-Z0-9]+)\\.png")[,2])
+
 
 # Flatten mouse tracking JSON into one table with trial identifiers
 long_data <- mouse_track_questions %>%
