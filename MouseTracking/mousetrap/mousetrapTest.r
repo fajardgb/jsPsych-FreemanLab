@@ -1,13 +1,13 @@
 library(mousetrap)
 library(ggplot2)
 
-file_path <- "MouseTracking/output/sample_data.csv"
+file_path <- "MouseTracking/output/fullscreen_data.csv"
 clean_dir <- "MouseTracking/mousetrap/output"
 file_name <- tools::file_path_sans_ext(basename(file_path))
 clean_file_path <- file.path(clean_dir, paste0(file_name, "_clean.csv"))
 
 # Clean data
-print("Cleaning data")
+message("▶ Cleaning data")
 source("MouseTracking/mousetrap/cleanup.r")
 
 # Mousetrap functions
@@ -20,6 +20,6 @@ mt_data <- mt_remap_symmetric(mt_data,
 
 mt_plot(mt_data, use = "trajectories")
 ggsave(file.path(dir, paste0(file_name, "_plot.png")), width = 8, height = 6)
-print("Plot saved")
+message("✓ Plot saved")
 
 # mt_animate(mt_data, filename = "animated.gif", im_path = "MouseTracking/mousetrap/output")

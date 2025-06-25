@@ -12,12 +12,19 @@ mouse_track_questions <- data %>%
   # Adds mt_id column (trial identifier)
   mutate(mt_id = row_number()) %>%
 
-  # Filter out trials that were too fast or too slow
+  # Filter out trials that were too fast, too slow, or not in fullscreen
   mutate(
     too_fast = as.logical(too_fast),
-    too_slow = as.logical(too_slow)
+    too_slow = as.logical(too_slow),
+    fullscreen = as.logical(fullscreen),
   ) %>%
-  filter(!(too_fast|too_slow)) %>%
+  {
+    n_before <- nrow(.)
+    filtered <- filter(., !(too_fast | too_slow | !fullscreen))
+    n_after <- nrow(filtered)
+    message("🛈 Filtered out ", n_before - n_after, " trial(s) for timing or fullscreen issues.")
+    filtered
+  } %>%
 
   # Add correct response column
   rowwise() %>%
@@ -63,5 +70,5 @@ long_data <- mouse_track_questions %>%
   )
 
 # Save as csv
-print(paste("Saved cleaned CSV at", clean_file_path))
+message(paste("✓ Saved cleaned CSV at", clean_file_path))
 write.csv(long_data, clean_file_path, row.names = FALSE)
