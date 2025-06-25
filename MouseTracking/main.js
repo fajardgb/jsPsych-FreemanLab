@@ -37,13 +37,14 @@ if (!debug) {
 
 //EXPERIMENT CONTENT GOES HERE
 
-//Terminate experiment if user is on mobile
+//Terminate experiment if user is on mobile or Safari
 var mobileCheck = {
   type: jsPsychBrowserCheck,
-  features: ["mobile"],
+  features: ["mobile", "browser"],
   inclusion_function: (data) => {
     console.log("Mobile: ", data.mobile)
-    return data.mobile == false
+    console.log("Browser: ", data.browser)
+    return data.mobile == false && data.browser != "safari"
   }
 };
 
@@ -61,7 +62,7 @@ if (config.randomizeButtons) {
 var fullscreen = {
     type: jsPsychFullscreen,
     fullscreen_mode: true,
-    message: `<p>The experiment will switch to full screen mode when you press the button below.</p><p>Please do not exit full screen mode until you have completed the study.</p>`
+    message: `<p>The experiment will switch to fullscreen mode when you press the button below.</p><p>Please do not exit fullscreen mode until you have completed the study.</p>`
 }
 
 //Checks for width and height of browser, terminates experiment if too small
@@ -90,12 +91,6 @@ var preload = {
 };
 
 timeline.push(mobileCheck, fullscreen, sizeCheck, instructions, preload)
-
-//Terminates the experiment if the user exits fullscreen mode
-document.addEventListener('fullscreenchange', function() {
-    alert("Please do not exit fullscreen mode. This study will be terminated.");
-    jsPsych.endExperiment()
-});
 
 //Adds styling (position and sizes) to images
 var stimuli = config.imageList.map(function (item) {
@@ -132,6 +127,11 @@ var mouseTrack = {
         } else if (data.rt > config.maxRT) {
             data.too_fast = false;
             data.too_slow = true; 
+        }
+        if(!document.fullscreenElement){
+            data.fullscreen = false
+        } else {
+            data.fullscreen = true
         }
     },
     data: {trial_name: 'mouseTrackQuestion', button_order: buttonOrder, categories: categories}
@@ -183,9 +183,30 @@ function checkTooSlow(){
     return feedbackNode;
 }
 
+//Checks if user is still in full screen mode and prompts user if needed
+function checkFullScreen(){
+    var reFullscreen = {
+        type: jsPsychFullscreen,
+        fullscreen_mode: true,
+        message: `<p>Please do not exit fullscreen mode.</p><p>Click the button below to return to fullscreen mode.</p>`
+    };
+    
+    var fullscreenNode = {
+        timeline: [reFullscreen],
+        conditional_function: function(){
+            if(!document.fullscreenElement){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    return fullscreenNode;
+}
+
 //Creates timeline
 var fullTrial = {
-    timeline: [prepare, mouseTrack, checkTooFast(), checkTooSlow()],
+    timeline: [prepare, mouseTrack, checkTooFast(), checkTooSlow(), checkFullScreen()],
     timeline_variables: stimuli,
     sample: {
         type: 'without-replacement',
