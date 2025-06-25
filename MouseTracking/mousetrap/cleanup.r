@@ -20,9 +20,21 @@ mouse_track_questions <- data %>%
   ) %>%
   {
     n_before <- nrow(.)
+    reason_counts <- summarise(
+      .,
+      too_fast = sum(too_fast, na.rm = TRUE),
+      too_slow = sum(too_slow, na.rm = TRUE),
+      not_fullscreen = sum(!fullscreen, na.rm = TRUE)
+    )
+    message("🛈 Filtering trials:")
+    message("- Too fast: ", reason_counts$too_fast)
+    message("- Too slow: ", reason_counts$too_slow)
+    message("- Not fullscreen: ", reason_counts$not_fullscreen)
+
     filtered <- filter(., !(too_fast | too_slow | !fullscreen))
+
     n_after <- nrow(filtered)
-    message("🛈 Filtered out ", n_before - n_after, " trial(s) for timing or fullscreen issues.")
+    message("- Total: ", n_before - n_after, "/", n_before, " trials removed")
     filtered
   } %>%
 
