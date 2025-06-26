@@ -1,0 +1,4 @@
+"mt_id","rt","correct","response","correct_response","button_order","stimulus","too_slow","too_fast","not_fullscreen","out_of_bounds"
+1,1102,TRUE,"WHITE","WHITE","[""WHITE"",""BLACK""]","w6",FALSE,FALSE,FALSE,FALSE
+2,1071,TRUE,"BLACK","BLACK","[""WHITE"",""BLACK""]","b4",FALSE,FALSE,TRUE,FALSE
+3,1123,TRUE,"WHITE","WHITE","[""WHITE"",""BLACK""]","w4",FALSE,FALSE,FALSE,FALSE
