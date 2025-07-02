@@ -118,6 +118,9 @@ Complete!
 ## Mousetracking
 Implement any mousetracking script!
 
+## Event Segmentation
+Pause = event, pause + label, label based on predetermined events. 
+
 ## Implicit Association Test (IAT)
 I made this one for a post-scan task, but it still needs some work/customizability. See the [example](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/IAT). 
 
