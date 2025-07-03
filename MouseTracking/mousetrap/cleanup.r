@@ -1,3 +1,6 @@
+# Module for moustrapTest.r - not designed to run on its own
+# Cleans JSPsych MouseTracking experiment output for use in Mousetrap
+
 library(dplyr)
 library(tidyr)
 library(jsonlite)
@@ -5,16 +8,17 @@ library(stringr)
 
 data <- read.csv(file_path)
 
-# Get screen dimensions
+# Get screen and box dimensions
 screen_width <- first(na.omit(data$width))
 screen_height <- first(na.omit(data$height))
+box_width <- first(na.omit(data$box_width))
+box_height <- first(na.omit(data$box_height))
 
 # Calculate bounding box edges
-# TODO: un-hardcode the bounding box dimensions
-bb_top <- (screen_height/2)+(600/2)
-bb_bot <- (screen_height/2)-(600/2)
-bb_left <- (screen_width/2)-(800/2)
-bb_right <- (screen_width/2)+(800/2)
+bb_top <- (screen_height / 2) + (box_height / 2)
+bb_bot <- (screen_height / 2) - (box_height / 2)
+bb_left <- (screen_width / 2) - (box_width / 2)
+bb_right <- (screen_width / 2) + (box_width / 2)
 
 mouse_track_questions <- data %>%
   # Filter for mouseTrackQuestion rows
@@ -71,18 +75,19 @@ oob_data <- long_data %>%
   ) %>%
   ungroup()
 
-# Add out of bounds column and clean columns
+# Add out of bounds and included columns and clean columns
 cleaned_data <- mouse_track_questions %>%
   left_join(oob_data, by = "mt_id") %>%
+  mutate(included = !if_any(all_of(c("too_slow", "too_fast", "not_fullscreen", "out_of_bounds")))) %>%
   select(mt_id, rt, correct, response, correct_response, button_order, stimulus,
-         too_slow, too_fast, not_fullscreen, out_of_bounds)
+         included, too_slow, too_fast, not_fullscreen, out_of_bounds)
 
 # Remove bad trials
 n_before <- nrow(cleaned_data)
 filtered_data <- cleaned_data %>%
   filter(!if_any(all_of(c("too_slow", "too_fast", "not_fullscreen", "out_of_bounds"))))
 n_after <- nrow(filtered_data)
-message("🛈 ", n_before - n_after, " trials were removed")
+message("🛈 ", n_before - n_after, " trial(s) removed")
 
 # Save as csv
 message(paste("✓ Saved cleaned CSV at", clean_file_path))

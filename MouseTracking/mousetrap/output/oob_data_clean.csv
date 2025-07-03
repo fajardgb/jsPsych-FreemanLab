@@ -1,4 +1,4 @@
-"mt_id","rt","correct","response","correct_response","button_order","stimulus","too_slow","too_fast","not_fullscreen","out_of_bounds"
-1,1957,TRUE,"WHITE","WHITE","[""BLACK"",""WHITE""]","w2",FALSE,FALSE,FALSE,TRUE
-2,1246,TRUE,"BLACK","BLACK","[""BLACK"",""WHITE""]","b4",FALSE,FALSE,FALSE,FALSE
-3,1208,TRUE,"WHITE","WHITE","[""BLACK"",""WHITE""]","w5",FALSE,FALSE,FALSE,FALSE
+"mt_id","rt","correct","response","correct_response","button_order","stimulus","included","too_slow","too_fast","not_fullscreen","out_of_bounds"
+1,1167,TRUE,"BLACK","BLACK","[""BLACK"",""WHITE""]","b4",TRUE,FALSE,FALSE,FALSE,FALSE
+2,1541,TRUE,"BLACK","BLACK","[""BLACK"",""WHITE""]","b2",FALSE,FALSE,FALSE,FALSE,TRUE
+3,1168,TRUE,"WHITE","WHITE","[""BLACK"",""WHITE""]","w3",TRUE,FALSE,FALSE,FALSE,FALSE

@@ -1,4 +1,0 @@
-"mt_id","rt","correct","response","correct_response","button_order","stimulus","too_slow","too_fast","not_fullscreen","out_of_bounds"
-1,1703,TRUE,"CATEGORY A","CATEGORY A","[""CATEGORY A"",""CATEGORY B""]","b3",FALSE,FALSE,FALSE,FALSE
-2,1261,FALSE,"CATEGORY A","CATEGORY B","[""CATEGORY A"",""CATEGORY B""]","w2",FALSE,FALSE,FALSE,FALSE
-3,1257,TRUE,"CATEGORY B","CATEGORY B","[""CATEGORY A"",""CATEGORY B""]","w3",FALSE,FALSE,FALSE,FALSE

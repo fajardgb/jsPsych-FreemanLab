@@ -75,11 +75,12 @@ var sizeCheck = {
     }
 }
 
-//Displays instructions
+//Displays instructions and adds to data
 var instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: config.instructions,
-    choices: ['Continue']
+    choices: ['Continue'],
+    data: {box_width: config.boxWidth, box_height: config.boxHeight}
 };
 
 //Preloads images
