@@ -29,8 +29,10 @@ There are many great ready-to-go scripts and examples available [online](https:/
 [SampleExperiment](https://github.com/fajardgb/jsPsych-FreemanLab/tree/main/SampleExperiment) serves as a template experiment that does the following:
 - Shows the consent form at the beginning (imported from [consent.js](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/consent.js))
 - Shows the demographics survey at the end (imported from [demographics.js](https://github.com/fajardgb/jsPsych-FreemanLab/blob/main/demographics.js))
-- Imports variables from a config file
 - Saves data as a csv at the end with a random subject ID
+- Shows an early termination screen if the participant fails the attention screener in the consent form or is otherwise kicked out before completing the final trial
+- Imports variables from an included config file
+- Adds a debug mode - Set debug to True to skip the demographic and consent forms for faster testing
 
 You can **make a copy** of the SampleExperiment folder to start your own script! Simply code your trials as normal in the **main.js** file between the `//EXPERIMENT CONTENT GOES HERE` and `//END OF EXPERIMENT CONTENT` comments. You can add any variable to the config file like so:
 ```javascript
@@ -38,8 +40,8 @@ const config = {
       //Comment explaining what the variable does
       exampleVariable: "Something", //don't forget the comma!
 
-      //You can make any variable, not just text!
-      numberVariable: 3,
+      //You can make any variable, including strings, ints, booleans, lists, etc
+      listVariable: ["Hello", "World"]
 }
 ```
 
