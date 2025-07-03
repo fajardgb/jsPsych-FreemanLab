@@ -211,7 +211,7 @@ var fullTrial = {
     timeline_variables: stimuli,
     sample: {
         type: 'without-replacement',
-        size: 3
+        size: config.trials
     }
 }
 timeline.push(fullTrial);
